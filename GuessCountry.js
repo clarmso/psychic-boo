@@ -13,19 +13,41 @@ var loc = [
 	{lat: -34.587509, lng: -70.993077}
 ];
 
-var i = Math.trunc(Math.random() * loc.length);
-var l = loc[i];
+var score = 0;
+
+var i;
+var l;
 var geocoder = new google.maps.Geocoder();
-var myzoom = 17;
+var myzoom = 18;
 
 function initialize() {
-     var mapOptions = {
+	i = Math.trunc(Math.random() * loc.length);
+	l = loc[i];
+    var mapOptions = {
         center: { lat: l.lat, lng: l.lng},
 			mapTypeId: google.maps.MapTypeId.TERRAIN,		
         zoom: myzoom,
 		disableDefaultUI: true,
+		disableDoubleClickZoom: true,
+		keyboardShortcuts: false,
+		zoomControl: false,
 		scrollwheel: false,
 		draggable: false,
+		clickable: false,
+		styles: [
+			{	
+   				"featureType": "transit",
+   		 		"elementType": "labels",
+		    	"stylers": [{ "visibility": "off" }]
+  			},{
+    			"featureType": "poi",
+    			"elementType": "labels",
+    			"stylers": [{ "visibility": "off" }]
+		  	},{
+    			"featureType": "administrative",
+    			"stylers": [{ "visibility": "off" }]
+  			}
+		]
     };
     var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 }
@@ -44,21 +66,27 @@ function validateCountry() {
 					for (i=0; i<addr.length; i++) {
 						if (addr[i].types.indexOf("country")>-1)
 							country = addr[i].long_name;
-						}
-						if (results[0].formatted_address.indexOf(c)>-1
-							|| country.indexOf(c)>-1) {
-							alert('Congrats! This is '+country);
-						}	
-						else {
-							alert('Sorry, this is '+country);
-						}
-					} else {
-						alert('Google Geocoder cannot query result');
 					}
+					if (country.indexOf(c)>-1) {
+						alert('Congrats! This is '+country);
+						score = score + 1;
+					}	
+					else {
+						alert('Sorry, this is '+country);
+					}
+
+					initialize();
+
 				} else {
-					alert('Google Geocoder Service failed: '+status);
+					alert('Google Geocoder cannot query result');
 				}
+			} else {
+					alert('Google Geocoder Service failed: '+status);
 			}
-		);
-	}
+		}
+	);
+}
+
 google.maps.event.addDomListener(window, 'load', initialize)
+
+
