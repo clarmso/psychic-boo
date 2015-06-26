@@ -2,7 +2,7 @@
 	padding: 20px
 }
 
-html, body, #map-canvas { 
+html, body, div, #map-canvas { 
 	height: 100%; 
 	margin: 0; 
 	padding: 0;

@@ -18,14 +18,14 @@ var score = 0;
 var i;
 var l;
 var geocoder = new google.maps.Geocoder();
-var myzoom = 18;
+var myzoom = 16;
 
 function initialize() {
 	i = Math.trunc(Math.random() * loc.length);
 	l = loc[i];
     var mapOptions = {
         center: { lat: l.lat, lng: l.lng},
-			mapTypeId: google.maps.MapTypeId.TERRAIN,		
+		mapTypeId: google.maps.MapTypeId.TERRAIN,		
         zoom: myzoom,
 		disableDefaultUI: true,
 		disableDoubleClickZoom: true,
@@ -34,6 +34,7 @@ function initialize() {
 		scrollwheel: false,
 		draggable: false,
 		clickable: false,
+		
 		styles: [
 			{	
    				"featureType": "transit",
@@ -57,6 +58,7 @@ function validateCountry() {
 	var latlng = new google.maps.LatLng(l.lat, l.lng);	
 	var addr;
 	var country;
+	var scoreElement;
 	geocoder.geocode({'latLng': latlng},
 		function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
@@ -74,7 +76,8 @@ function validateCountry() {
 					else {
 						alert('Sorry, this is '+country);
 					}
-
+					scoreElement = document.getElementById("score");
+					scoreElement.innerHTML = "Score: "+score;
 					initialize();
 
 				} else {
