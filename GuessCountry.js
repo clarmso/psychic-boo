@@ -68,6 +68,7 @@ var l;
 var geocoder = new google.maps.Geocoder();
 
 function initialize() {
+
 	i = Math.trunc(Math.random() * loc.length);
 	l = loc[i];
     var mapOptions = {
@@ -96,6 +97,10 @@ function initialize() {
   			}
 		]
     };
+
+	document.getElementById("score").innerHTML = "Score: "+score;
+	document.getElementById("country").placeholder = "Country";
+	document.getElementById("country").value = "";
     var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 }
 
@@ -111,7 +116,6 @@ function validateCountry() {
 	var addr;
 	var longCountry;
 	var shortCountry;
-	var scoreElement;
 	geocoder.geocode({
 		'latLng': latlng, 
 		'language': "en",
@@ -137,11 +141,11 @@ function validateCountry() {
 						score = score + 1;
 					}	
 					else {
-						alert('Sorry, this is in '+city+", "+longCountry+".");
+						alert('Sorry, this is in '+longCountry+".");
 					}
 
-					scoreElement = document.getElementById("score");
-					scoreElement.innerHTML = "Score: "+score;
+					//$('#myModal').modal('show');
+
 					initialize();
 
 				} else {

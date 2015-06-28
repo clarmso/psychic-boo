@@ -2,8 +2,18 @@
 <html>
   <head>
     <title>Which country is it?</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="GuessCountry.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr7BFn8rNHsqhii7SMk3KByJ3nco4ISFk">
 		</script>
@@ -13,12 +23,35 @@
   <body>
     <h1>Where am I?</h1>
     <div class="contents">
-  		<input id="country" type="text" placeholder="Country" required>
+  		<input id="country" type="text" placeholder="Country"/>
       <button onclick="validateCountry()">Enter</button>
-      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
       <p id="score">Score: 0</p>
     	<div id="map-canvas"/>
     </div>
+
+ <!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>   
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Next Question</button>
+      </div>
+    </div>
+
+  </div>
+
 
   </body>
 </html>
