@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Which country is it?</title>
     <link rel="stylesheet" href="GuessCountry.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script type="text/javascript"
@@ -11,11 +12,13 @@
   </head>
   <body>
     <h1>Where am I?</h1>
-    <div id="contents">
-  		<input id="country" type="text" hint="Country" value="Canada"/>
+    <div class="contents">
+  		<input id="country" type="text" placeholder="Country" required>
       <button onclick="validateCountry()">Enter</button>
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
       <p id="score">Score: 0</p>
     	<div id="map-canvas"/>
     </div>
+
   </body>
 </html>
