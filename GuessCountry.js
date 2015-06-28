@@ -1,3 +1,7 @@
+// All latitude/longtitude of all locations.
+// The answer of each question is determined by the Google
+// reverse geocoding service, so there's no hacking in the 
+// Javascript code to get the answer. ;-)
 var loc = [
 	{lat:45.500169, lng: -73.565767, zoom: 15},
 	{lat: 53.5378498, lng: -113.4819752, zoom: 15},
@@ -63,13 +67,12 @@ var loc = [
 
 var score = 0;
 
-var i;
 var l;
 var geocoder = new google.maps.Geocoder();
 
 function initialize() {
 
-	i = Math.trunc(Math.random() * loc.length);
+	var i = Math.trunc(Math.random() * loc.length);
 	l = loc[i];
     var mapOptions = {
         center: { lat: l.lat, lng: l.lng},
@@ -97,11 +100,17 @@ function initialize() {
   			}
 		]
     };
-
-	document.getElementById("score").innerHTML = "Score: "+score;
-	document.getElementById("country").placeholder = "Country";
-	document.getElementById("country").value = "";
     var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+    // Update the score
+	$("#score").text("Score: "+score);
+
+	// Refresh the input field
+	$("#country").val("");
+	$("#country").attr("placeholder", "Country");
+	$("#country").focus().select();
+	//document.getElementById("country").focus();
+	//document.getElementById("country").select();
 }
 
 function validateCountry() {
