@@ -70,6 +70,8 @@ var score = 0;
 var l;
 var geocoder = new google.maps.Geocoder();
 
+
+
 function initialize() {
 
 	var i = Math.trunc(Math.random() * loc.length);
@@ -106,11 +108,28 @@ function initialize() {
 	$("#score").text("Score: "+score);
 
 	// Refresh the input field
+	$("#enter").disabled;
+	$("#enter").attr("class", "btn btn-primary disabled");
 	$("#country").val("");
 	$("#country").attr("placeholder", "Country");
 	$("#country").focus().select();
-	//document.getElementById("country").focus();
-	//document.getElementById("country").select();
+
+	// Disable "enter" button unless some input has been
+	// detected.
+	$("#country").keyup(function() {
+		if ($("#country").val()!="") {
+			$("#enter").removeAttr("disabled");
+			$("#enter").attr("class", "btn btn-primary");
+		} else {
+			$("#enter").attr("disabled", "true");
+			$("#enter").attr("class", "btn btn-primary disabled");
+		}
+
+		if (event.keyCode==13) {
+			$("#enter").click();
+		}
+	});
+
 }
 
 function validateCountry() {

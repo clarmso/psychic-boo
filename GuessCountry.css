@@ -1,21 +1,8 @@
-body {
-	margin: 0;
-	padding: 0;
-}
-
-html, body, div, #map-canvas { 
-	height: 100%; 
-}
-
-div, #contents {
-	margin-left: auto;
-	margin-right: auto;
-	width: auto;
-	padding: 10;
-}
-
-/*
-#score {
+p, #score {
 	text-align: right;
 }
-*/
+
+
+#map-canvas {
+ 	height: 800px;
+}
