@@ -65,6 +65,27 @@ var loc = [
 	{lat: 56.3368248, lng: -2.7898692, zoom: 16}
 ];
 
+var wrongAnswerMeme = [
+	"http://i.imgur.com/fYRQR2u.png",
+	"http://i.imgur.com/puFO9JC.png",
+	"http://i.imgur.com/E8ddrhz.png",
+	"http://i.imgur.com/fhikE2b.png",
+	"http://i.imgur.com/dUZpLeh.png",
+	"http://i.imgur.com/dzzfRnT.png",
+	"http://i.imgur.com/hdaQBag.png",
+	"http://i.imgur.com/oshvvKg.png"
+];
+
+var rightAnswerMeme = [
+	"http://i.imgur.com/hAp4rFM.png",
+	"http://i.imgur.com/5GCjnDS.png",
+	"http://i.imgur.com/tTKWnnJ.png",
+	"http://i.imgur.com/jXSg3NE.png",
+	"http://i.imgur.com/2eRZAhq.png",
+	"http://i.imgur.com/mCp7GLQ.png",
+	"http://i.imgur.com/tJc75zv.png"
+];
+
 var score = 0;
 
 var l;
@@ -125,15 +146,22 @@ function initialize() {
 			$("#enter").attr("class", "btn btn-primary disabled");
 		}
 
-		if (event.keyCode==13) {
+		if (event.keyCode==13 && $("#country").val()!="") {
 			$("#enter").click();
 		}
+		
 	});
 
+	$("#modal-button").keyup(function() {
+		if (even.keyCode==13) {
+			$("#modal-button").click();
+		}
+	})
 }
 
 function validateCountry() {
-	var c = document.getElementById("country").value.trim();
+	var c = $("#country").val().trim();
+	$("#country").val("");
 
 	if (c==null || c=="") {
 		alert("Please enter the name of the country.");
@@ -164,15 +192,18 @@ function validateCountry() {
 					}
 
 					if (longCountry.indexOf(c)>-1  || shortCountry.indexOf(c)>-1) {
-						alert('Congrats! This is in '+longCountry+".");
-						//${answerModal}.modal('show');
+						$("#modal-answer").text("Congratulations!");
+						$("#answer").text("Congrats! This is in "+longCountry);
 						score = score + 1;
 					}	
 					else {
-						alert('Sorry, this is in '+longCountry+".");
-					}
+						$("#modal-answer").text("Sorry!");
+						$("#answer").text("Sorry! This is in "+longCountry);
 
-					//$('#myModal').modal('show');
+					}
+					$('#myModal').modal('show');
+					$("#modal-button").focus();
+					//$("#modal-button").focus().select();
 
 					initialize();
 
