@@ -1,8 +1,23 @@
 p, #score {
 	text-align: right;
+	font-size: 150%;
 }
 
+#answer {
+	font-size: 200%;
+	text-align: center;
+}
 
 #map-canvas {
 	height:700px;
+}
+
+.meme {
+	width: inherit;
+	max-height: 600px;
+	overflow: hidden;
+}
+
+.meme img {
+	width: 100%;
 }

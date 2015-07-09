@@ -65,25 +65,33 @@ var loc = [
 	{lat: 56.3368248, lng: -2.7898692, zoom: 16}
 ];
 
-var wrongAnswerMeme = [
-	"http://i.imgur.com/fYRQR2u.png",
+var noMeme = [
+	"http://i.imgur.com/ub9gzny.png",
+	"http://i.imgur.com/KXD0v4f.png",
+	"http://i.imgur.com/zaiJFhJ.png",
+	"http://i.imgur.com/KIq48Yn.png",
+	"http://i.imgur.com/g9VDEiD.png",
+	"http://i.imgur.com/Cjl7vmq.png",
+	"http://i.imgur.com/42EDNHc.png",
 	"http://i.imgur.com/puFO9JC.png",
 	"http://i.imgur.com/E8ddrhz.png",
 	"http://i.imgur.com/fhikE2b.png",
 	"http://i.imgur.com/dUZpLeh.png",
-	"http://i.imgur.com/dzzfRnT.png",
 	"http://i.imgur.com/hdaQBag.png",
-	"http://i.imgur.com/oshvvKg.png"
+	"http://i.imgur.com/oshvvKg.png",
+	"http://i.imgur.com/7VmjZVW.png"
 ];
 
-var rightAnswerMeme = [
+var yesMeme = [
 	"http://i.imgur.com/hAp4rFM.png",
-	"http://i.imgur.com/5GCjnDS.png",
 	"http://i.imgur.com/tTKWnnJ.png",
-	"http://i.imgur.com/jXSg3NE.png",
 	"http://i.imgur.com/2eRZAhq.png",
 	"http://i.imgur.com/mCp7GLQ.png",
-	"http://i.imgur.com/tJc75zv.png"
+	"http://i.imgur.com/Zeo81mi.png",
+	"http://i.imgur.com/kNjFWUX.png",
+	"http://i.imgur.com/rZPqX6i.png",
+	"http://i.imgur.com/XY68Ubl.png",
+	"http://i.imgur.com/WBzR0Mv.png"
 ];
 
 var score = 0;
@@ -138,7 +146,7 @@ function initialize() {
 	// Disable "enter" button unless some input has been
 	// detected.
 	$("#country").keyup(function() {
-		if ($("#country").val()!="") {
+		if ($("#country").val()!="" || !$("#myModal").data('bs.modal').isShown) {
 			$("#enter").removeAttr("disabled");
 			$("#enter").attr("class", "btn btn-primary");
 		} else {
@@ -152,11 +160,7 @@ function initialize() {
 		
 	});
 
-	$("#modal-button").keyup(function() {
-		if (even.keyCode==13) {
-			$("#modal-button").click();
-		}
-	})
+
 }
 
 function validateCountry() {
@@ -172,6 +176,7 @@ function validateCountry() {
 	var addr;
 	var longCountry;
 	var shortCountry;
+	var random;
 	geocoder.geocode({
 		'latLng': latlng, 
 		'language': "en",
@@ -192,20 +197,22 @@ function validateCountry() {
 					}
 
 					if (longCountry.indexOf(c)>-1  || shortCountry.indexOf(c)>-1) {
-						$("#modal-answer").text("Congratulations!");
-						$("#answer").text("Congrats! This is in "+longCountry);
+						$("#answer").text("Congrats! This is in "+longCountry+".");
+						random = Math.trunc(Math.random() * yesMeme.length);
+						$("#meme").attr("src", yesMeme[random]);
 						score = score + 1;
 					}	
 					else {
-						$("#modal-answer").text("Sorry!");
-						$("#answer").text("Sorry! This is in "+longCountry);
-
+						$("#answer").text("Sorry! This is in "+longCountry+".");
+						random = Math.trunc(Math.random() * noMeme.length);
+						$("#meme").attr("src",noMeme[random]);
 					}
+					$('#myModal').on('hidden.bs.modal', function () {
+    					initialize();
+					})
 					$('#myModal').modal('show');
-					$("#modal-button").focus();
-					//$("#modal-button").focus().select();
 
-					initialize();
+					
 
 				} else {
 					alert('Google Geocoder cannot query result');
