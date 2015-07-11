@@ -65,6 +65,14 @@ var loc = [
 	{lat: 56.3368248, lng: -2.7898692, zoom: 16}
 ];
 
+var listOfCountries = [
+	"Argentina", "Australia", "Belarus", "Canada", "China",
+	"Colombia", "France", "Germany", "Italy", "Japan", "Mexico",
+	"New Zealand", "Portugal", "Romania", "Russia", "South Africa",
+	"Sout Korea", "Spain", "Switzerland", "Turkey", "Vatican City", 
+	"United States", "United Kingdom"
+];
+
 var noMeme = [
 	"http://i.imgur.com/ub9gzny.png",
 	"http://i.imgur.com/KXD0v4f.png",
@@ -137,37 +145,29 @@ function initialize() {
 	$("#score").text("Score: "+score);
 
 	// Refresh the input field
+	
 	$("#enter").disabled;
 	$("#enter").attr("class", "btn btn-primary disabled");
-	$("#country").val("");
-	$("#country").attr("placeholder", "Country");
-	$("#country").focus().select();
+	$("#elementTyper").attr("disabled", "true");
+	$("#country").text("Select Country");
 
-	// Disable "enter" button unless some input has been
-	// detected.
-	$("#country").keyup(function() {
-		if ($("#country").val()!="" || !$("#myModal").data('bs.modal').isShown) {
-			$("#enter").removeAttr("disabled");
-			$("#enter").attr("class", "btn btn-primary");
-		} else {
-			$("#enter").attr("disabled", "true");
-			$("#enter").attr("class", "btn btn-primary disabled");
-		}
 
-		if (event.keyCode==13 && $("#country").val()!="") {
-			$("#enter").click();
-		}
-		
+	$(".dropdown-menu li a").click(function(){
+		$(this).parents(".dropdown").find('.selection').text($(this).text());
+  		$(this).parents(".dropdown").find('.selection').val($(this).text());
+  		alert("dropdown menu clicked");
+  		$("#enter").attr("class", "btn btn-primary");
+  		$("#enter").removeAttr("disabled");
 	});
 
-
+	//$("#myModal").modal({keyboard:true});
 }
 
 function validateCountry() {
-	var c = $("#country").val().trim();
-	$("#country").val("");
+	var country = $("#country").val().trim();
+	$("#country").val("Select Country");
 
-	if (c==null || c=="") {
+	if (country==null || country=="") {
 		alert("Please enter the name of the country.");
 		return false;
 	}
@@ -196,7 +196,7 @@ function validateCountry() {
 						}
 					}
 
-					if (longCountry.indexOf(c)>-1  || shortCountry.indexOf(c)>-1) {
+					if (longCountry.indexOf(country)>-1  || shortCountry.indexOf(country)>-1) {
 						$("#answer").text("Congrats! This is in "+longCountry+".");
 						random = Math.trunc(Math.random() * yesMeme.length);
 						$("#meme").attr("src", yesMeme[random]);
