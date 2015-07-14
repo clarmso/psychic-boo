@@ -148,7 +148,7 @@ function initialize() {
 	
 	$("#enter").disabled;
 	$("#enter").attr("class", "btn btn-primary disabled");
-	$("#elementTyper").attr("disabled", "true");
+	$("#enter").attr("disabled", "true");
 	$("#country").text("Select Country");
 
 
