@@ -155,12 +155,11 @@ function initialize() {
 	$(".dropdown-menu li a").click(function(){
 		$(this).parents(".dropdown").find('.selection').text($(this).text());
   		$(this).parents(".dropdown").find('.selection').val($(this).text());
-  		alert("dropdown menu clicked");
+  		//alert("dropdown menu clicked");
   		$("#enter").attr("class", "btn btn-primary");
   		$("#enter").removeAttr("disabled");
 	});
 
-	//$("#myModal").modal({keyboard:true});
 }
 
 function validateCountry() {
@@ -209,6 +208,16 @@ function validateCountry() {
 					}
 					$('#myModal').on('hidden.bs.modal', function () {
     					initialize();
+					})
+					$('#myModal').on('shown.bs.modal', function() {
+						$('#nextQuestion').keyup(function(event) {
+							if (event.keyCode==13) {
+								$('#myModal').modal('hide');
+							}
+							if (event.keyCode==32) {
+								$('#myModal').modal('hide');
+							}
+						})
 					})
 					$('#myModal').modal('show');
 
