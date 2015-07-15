@@ -146,9 +146,8 @@ function initialize() {
 
 	// Refresh the input field
 	
-	$("#enter").disabled;
 	$("#enter").attr("class", "btn btn-primary disabled");
-	$("#enter").attr("disabled", "true");
+	$("#enter").prop("disabled", true);
 	$("#country").text("Select Country");
 
 
@@ -157,7 +156,7 @@ function initialize() {
   		$(this).parents(".dropdown").find('.selection').val($(this).text());
   		//alert("dropdown menu clicked");
   		$("#enter").attr("class", "btn btn-primary");
-  		$("#enter").removeAttr("disabled");
+  		$("#enter").prop("disabled", false);
 	});
 
 }
