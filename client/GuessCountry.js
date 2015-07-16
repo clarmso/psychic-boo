@@ -70,8 +70,10 @@ var listOfCountries = [
 	"Colombia", "France", "Germany", "Italy", "Japan", "Mexico",
 	"New Zealand", "Portugal", "Romania", "Russia", "South Africa",
 	"Sout Korea", "Spain", "Switzerland", "Turkey", "Vatican City", 
-	"United States", "United Kingdom"
-];
+	"United States", "United Kingdom", "Tunisia", "Iran", "Vietnam",
+	"Tanzania", "Ghana", "Brazil", "Chile"
+].sort();
+
 
 var noMeme = [
 	"http://i.imgur.com/ub9gzny.png",
@@ -107,9 +109,21 @@ var score = 0;
 var l;
 var geocoder = new google.maps.Geocoder();
 
+function fillDropdown(list, ul) {
+	for (var i=0; i<list.length; i++) {
+		var li = document.createElement("li");
+		var a = document.createElement("a");
+		a.innerHTML = list[i];
+		a.setAttribute("href", "#");
+		li.appendChild(a);
+		ul.appendChild(li);
+	}
+}
 
 
 function initialize() {
+
+	fillDropdown(listOfCountries, document.getElementById("countryList"));
 
 	var i = Math.trunc(Math.random() * loc.length);
 	l = loc[i];
@@ -144,8 +158,7 @@ function initialize() {
     // Update the score
 	$("#score").text("Score: "+score);
 
-	// Refresh the input field
-	
+	// Refresh the input field	
 	$("#enter").attr("class", "btn btn-primary disabled");
 	$("#enter").prop("disabled", true);
 	$("#country").text("Select Country");
