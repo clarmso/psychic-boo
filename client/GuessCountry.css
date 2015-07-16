@@ -21,3 +21,10 @@ p, #score {
 .meme img {
 	width: 100%;
 }
+
+.dropdown-menu {
+    height: auto;
+    max-height: 400px;
+    overflow-x: hidden;
+    //background-color: yellow;
+}
