@@ -2,3 +2,5 @@
 
 This repository contains the project for BrainStation Waterloo's
 Intro to Web Development Course.
+
+See the project in http://psychic-boo.herokuapp.com/
