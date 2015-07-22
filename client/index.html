@@ -13,6 +13,10 @@
     <!-- Latest compiled JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+    <!-- jquery-ui for autocomplete -->
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
     <link rel="stylesheet" href="GuessCountry.css">
 
     <script type="text/javascript"
@@ -28,22 +32,17 @@
       <div class="row">
         <div class="col-sm-6 btn-toolbar">
 
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-            <span id="country" class="selection">Select Country</span>
-            <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" id="countryList">
-            </ul>
+          <div class="ui-widget">
+            <input id="country" placeholder="Country Name"/>
+            <button id="enter" onclick="validateCountry()" class="btn btn-primary disabled" type="button" disabled>Enter</button>
           </div>
-          <button id="enter" onclick="validateCountry()" class="btn btn-primary disabled" type="button" disabled>Enter</button>
-        </div>
+       </div>
 
         <div class="col-sm-6">
           <p id="score">Score: 0</p>
         </div>
       </div>
-          <div id="map-canvas"/>
+       <div id="map-canvas"/>
     </div>
 
 

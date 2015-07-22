@@ -1,6 +1,6 @@
 // All latitude/longtitude of all locations.
 // The answer of each question is determined by the Google
-// reverse geocoding service, so there's no hacking in the 
+// reverse geocoding service, so there's no hacking in the
 // Javascript code to get the answer. ;-)
 var loc = [
 	{lat:45.500169, lng: -73.565767, zoom: 15},
@@ -69,10 +69,10 @@ var listOfCountries = [
 	"Argentina", "Australia", "Belarus", "Canada", "China",
 	"Colombia", "France", "Germany", "Italy", "Japan", "Mexico",
 	"New Zealand", "Portugal", "Romania", "Russia", "South Africa",
-	"Sout Korea", "Spain", "Switzerland", "Turkey", "Vatican City", 
+	"Sout Korea", "Spain", "Switzerland", "Turkey", "Vatican City",
 	"United States", "United Kingdom", "Tunisia", "Iran", "Vietnam",
 	"Tanzania", "Ghana", "Brazil", "Chile"
-].sort();
+];
 
 
 var noMeme = [
@@ -109,27 +109,13 @@ var score = 0;
 var l;
 var geocoder = new google.maps.Geocoder();
 
-function fillDropdown(list, ul) {
-	for (var i=0; i<list.length; i++) {
-		var li = document.createElement("li");
-		var a = document.createElement("a");
-		a.innerHTML = list[i];
-		a.setAttribute("href", "#");
-		li.appendChild(a);
-		ul.appendChild(li);
-	}
-}
-
-
 function initialize() {
-
-	fillDropdown(listOfCountries, document.getElementById("countryList"));
 
 	var i = Math.trunc(Math.random() * loc.length);
 	l = loc[i];
     var mapOptions = {
         center: { lat: l.lat, lng: l.lng},
-		mapTypeId: google.maps.MapTypeId.ROAD,		
+		mapTypeId: google.maps.MapTypeId.ROAD,
         zoom: l.zoom,
 		disableDefaultUI: true,
 		disableDoubleClickZoom: true,
@@ -139,7 +125,7 @@ function initialize() {
 		draggable: false,
 		clickable: false,
 		styles: [
-			{	
+			{
    				"featureType": "transit",
    		 		"elementType": "labels",
 		    	"stylers": [{ "visibility": "off" }]
@@ -158,18 +144,15 @@ function initialize() {
     // Update the score
 	$("#score").text("Score: "+score);
 
-	// Refresh the input field	
+	// Refresh the input field
 	$("#enter").attr("class", "btn btn-primary disabled");
 	$("#enter").prop("disabled", true);
-	$("#country").text("Select Country");
 
 
-	$(".dropdown-menu li a").click(function(){
-		$(this).parents(".dropdown").find('.selection').text($(this).text());
-  		$(this).parents(".dropdown").find('.selection').val($(this).text());
-  		//alert("dropdown menu clicked");
-  		$("#enter").attr("class", "btn btn-primary");
-  		$("#enter").prop("disabled", false);
+	$("#country").autocomplete({source: listOfCountries});
+	$("#country").on('input', function() {
+		$("#enter").attr("class", "btn btn-primary");
+		$("#enter").prop("disabled", false);
 	});
 
 }
@@ -183,13 +166,13 @@ function validateCountry() {
 		return false;
 	}
 
-	var latlng = new google.maps.LatLng(l.lat, l.lng);	
+	var latlng = new google.maps.LatLng(l.lat, l.lng);
 	var addr;
 	var longCountry;
 	var shortCountry;
 	var random;
 	geocoder.geocode({
-		'latLng': latlng, 
+		'latLng': latlng,
 		'language': "en",
 		},
 		function(results, status) {
@@ -212,7 +195,7 @@ function validateCountry() {
 						random = Math.trunc(Math.random() * yesMeme.length);
 						$("#meme").attr("src", yesMeme[random]);
 						score = score + 1;
-					}	
+					}
 					else {
 						$("#answer").text("Sorry! This is in "+longCountry+".");
 						random = Math.trunc(Math.random() * noMeme.length);
@@ -233,7 +216,7 @@ function validateCountry() {
 					})
 					$('#myModal').modal('show');
 
-					
+
 
 				} else {
 					alert('Google Geocoder cannot query result');
@@ -246,5 +229,3 @@ function validateCountry() {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize)
-
-
