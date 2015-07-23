@@ -159,7 +159,7 @@ function initialize() {
 
 function validateCountry() {
 	var country = $("#country").val().trim();
-	$("#country").val("Select Country");
+	$("#country").val("");
 
 	if (country==null || country=="") {
 		alert("Please enter the name of the country.");
