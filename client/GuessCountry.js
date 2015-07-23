@@ -113,33 +113,33 @@ function initialize() {
 
 	var i = Math.trunc(Math.random() * loc.length);
 	l = loc[i];
-    var mapOptions = {
+  var mapOptions = {
         center: { lat: l.lat, lng: l.lng},
-		mapTypeId: google.maps.MapTypeId.ROAD,
+				mapTypeId: google.maps.MapTypeId.ROAD,
         zoom: l.zoom,
-		disableDefaultUI: true,
-		disableDoubleClickZoom: true,
-		keyboardShortcuts: false,
-		zoomControl: false,
-		scrollwheel: false,
-		draggable: false,
-		clickable: false,
-		styles: [
-			{
+				disableDefaultUI: true,
+				disableDoubleClickZoom: true,
+				keyboardShortcuts: false,
+				zoomControl: false,
+				scrollwheel: false,
+				draggable: false,
+				clickable: false,
+				styles: [
+					{
    				"featureType": "transit",
    		 		"elementType": "labels",
 		    	"stylers": [{ "visibility": "off" }]
-  			},{
+  				},{
     			"featureType": "poi",
     			"elementType": "labels",
     			"stylers": [{ "visibility": "off" }]
-		  	},{
+		  		},{
     			"featureType": "administrative",
     			"stylers": [{ "visibility": "off" }]
-  			}
-		]
+  				}
+				]
     };
-    var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
     // Update the score
 	$("#score").text("Score: "+score);
