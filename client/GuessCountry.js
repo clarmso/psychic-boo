@@ -139,6 +139,7 @@ function initialize() {
   				}
 				]
     };
+	loc.splice(i,1);
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
     // Update the score
@@ -192,30 +193,20 @@ function validateCountry() {
 
 					if (longCountry.indexOf(country)>-1  || shortCountry.indexOf(country)>-1) {
 						$("#answer").text("Congrats! This is in "+longCountry+".");
-						$("#answer-div").addClass("alert alert-sucess");
+						$("#answer-div").removeClass("alert alert-danger").addClass("alert alert-success");
 						random = Math.trunc(Math.random() * yesMeme.length);
 						$("#meme").attr("src", yesMeme[random]);
 						score = score + 1;
 					}
 					else {
 						$("#answer").text("Sorry! This is in "+longCountry+".");
-						$("#answer-div").addClass("alert alert-danger");
+						$("#answer-div").removeClass("alert alert-success").addClass("alert alert-danger");
 						random = Math.trunc(Math.random() * noMeme.length);
 						$("#meme").attr("src",noMeme[random]);
 					}
-					$('#myModal').on('hidden.bs.modal', function () {
-    					initialize();
-					})
-					$('#myModal').on('shown.bs.modal', function() {
-						$('#nextQuestion').keyup(function(event) {
-							if (event.keyCode==13) {
-								$('#myModal').modal('hide');
-							}
-							if (event.keyCode==32) {
-								$('#myModal').modal('hide');
-							}
-						})
-					})
+					// $('#myModal').on('shown.bs.modal', function() {
+					//
+					// })
 					$('#myModal').modal('show');
 
 
@@ -229,5 +220,24 @@ function validateCountry() {
 		}
 	);
 }
+
+$(document).ready(function() {
+
+	$('#myModal').on('hidden.bs.modal', function () {
+			initialize();
+	});
+
+	$('#myModal').keyup(function(event) {
+		console.log('hey');
+		if (event.keyCode==13) {
+			$('#myModal').modal('hide');
+		}
+		if (event.keyCode==32) {
+			$('#myModal').modal('hide');
+		}
+	});
+
+
+});
 
 google.maps.event.addDomListener(window, 'load', initialize)
