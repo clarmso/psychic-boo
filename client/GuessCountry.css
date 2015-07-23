@@ -4,7 +4,7 @@ p, #score {
 }
 
 p, .answer {
-	font-size: 35px;
+	font-size: 200%;
 	text-align: center;
 }
 
@@ -39,11 +39,4 @@ html, body {
 
 .meme img {
 	width: 100%;
-}
-
-.dropdown-menu {
-    height: auto;
-    max-height: 400px;
-    overflow-x: hidden;
-    //background-color: yellow;
 }

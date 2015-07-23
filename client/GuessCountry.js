@@ -69,7 +69,7 @@ var listOfCountries = [
 	"Argentina", "Australia", "Belarus", "Canada", "China",
 	"Colombia", "France", "Germany", "Italy", "Japan", "Mexico",
 	"New Zealand", "Portugal", "Romania", "Russia", "South Africa",
-	"Sout Korea", "Spain", "Switzerland", "Turkey", "Vatican City",
+	"South Korea", "Spain", "Switzerland", "Turkey", "Vatican City",
 	"United States", "United Kingdom", "Tunisia", "Iran", "Vietnam",
 	"Tanzania", "Ghana", "Brazil", "Chile"
 ];
@@ -110,7 +110,6 @@ var l;
 var geocoder = new google.maps.Geocoder();
 
 function initialize() {
-
 	var i = Math.trunc(Math.random() * loc.length);
 	l = loc[i];
   var mapOptions = {
@@ -142,25 +141,18 @@ function initialize() {
 	loc.splice(i,1);
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-    // Update the score
+	// Update the score
 	$("#score").text("Score: "+score);
 
 	// Refresh the input field
 	$("#enter").attr("class", "btn btn-primary disabled");
 	$("#enter").prop("disabled", true);
-
-
-	$("#country").autocomplete({source: listOfCountries});
-	$("#country").on('input', function() {
-		$("#enter").attr("class", "btn btn-primary");
-		$("#enter").prop("disabled", false);
-	});
-
+	$("#country").val("");
+	$("#country").focus();
 }
 
 function validateCountry() {
 	var country = $("#country").val().trim();
-	$("#country").val("");
 
 	if (country==null || country=="") {
 		alert("Please enter the name of the country.");
@@ -204,12 +196,7 @@ function validateCountry() {
 						random = Math.trunc(Math.random() * noMeme.length);
 						$("#meme").attr("src",noMeme[random]);
 					}
-					// $('#myModal').on('shown.bs.modal', function() {
-					//
-					// })
 					$('#myModal').modal('show');
-
-
 
 				} else {
 					alert('Google Geocoder cannot query result');
@@ -237,6 +224,16 @@ $(document).ready(function() {
 		}
 	});
 
+	$("#country").autocomplete({source: listOfCountries});
+	$("#country").on('input', function() {
+		$("#enter").attr("class", "btn btn-primary");
+		$("#enter").prop("disabled", false);
+	});
+	$("#country").keyup(function(event) {
+		if ( (event.keyCode==13) && ($("#country").val().trim()!="") ){
+			validateCountry();
+		}
+	})
 
 });
 
