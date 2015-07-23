@@ -192,12 +192,14 @@ function validateCountry() {
 
 					if (longCountry.indexOf(country)>-1  || shortCountry.indexOf(country)>-1) {
 						$("#answer").text("Congrats! This is in "+longCountry+".");
+						$("#answer-div").addClass("alert alert-sucess");
 						random = Math.trunc(Math.random() * yesMeme.length);
 						$("#meme").attr("src", yesMeme[random]);
 						score = score + 1;
 					}
 					else {
 						$("#answer").text("Sorry! This is in "+longCountry+".");
+						$("#answer-div").addClass("alert alert-danger");
 						random = Math.trunc(Math.random() * noMeme.length);
 						$("#meme").attr("src",noMeme[random]);
 					}

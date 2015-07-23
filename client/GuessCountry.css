@@ -3,7 +3,7 @@ p, #score {
 	font-size: 150%;
 }
 
-#answer {
+p, .answer {
 	font-size: 200%;
 	text-align: center;
 }
