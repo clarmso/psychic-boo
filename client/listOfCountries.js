@@ -105,7 +105,7 @@ var listOfCountries = [
 	"Guyana",
 	"Haiti",
 	"Heard Island and McDonald Islands",
-	"Holy See (Vatican City)",
+	"Vatican City",
 	"Honduras",
 	"Hong Kong",
 	"Hungary",
