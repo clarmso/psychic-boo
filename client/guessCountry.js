@@ -7,6 +7,7 @@ var numQuestions = 10;
 function initialize() {
 	numQuestions--;
 
+	// Game Over!
 	if (numQuestions==0) {
 		$("#answer").text("Your final score: "+score+"/10");
 		$("#answer-div").removeClass("alert alert-danger")
@@ -23,6 +24,8 @@ function initialize() {
 		$("#nextQuestion").text("New Game");
 		console.log("show final score");
 		$('#myModal').modal('show');
+
+	// More questions
 	} else {
 
 		var i = Math.trunc(Math.random() * loc.length);
@@ -52,19 +55,19 @@ function initialize() {
     			"stylers": [{ "visibility": "off" }]
   				}
 				]
-    };
-		loc.splice(i,1);
-  	var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    	};
+			loc.splice(i,1);
+  		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-		// Update the score
-		$("#score").text("Score: "+score);
+			// Update the score
+			$("#score").text("Score: "+score);
 
-		// Refresh the input field
-		$("#enter").attr("class", "btn btn-primary disabled");
-		$("#enter").prop("disabled", true);
-		$("#country").val("");
-		$("#country").focus();
-	}
+			// Refresh the input field
+			$("#enter").attr("class", "btn btn-primary disabled");
+			$("#enter").prop("disabled", true);
+			$("#country").val("");
+			$("#country").focus();
+		}
 }
 
 function validateCountry() {
