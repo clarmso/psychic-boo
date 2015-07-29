@@ -23,11 +23,11 @@ function initialize() {
 		$("#nextQuestion").text("New Game");
 		console.log("show final score");
 		$('#myModal').modal('show');
-	}
+	} else {
 
-	var i = Math.trunc(Math.random() * loc.length);
-	l = loc[i];
-  var mapOptions = {
+		var i = Math.trunc(Math.random() * loc.length);
+		l = loc[i];
+  	var mapOptions = {
         center: { lat: l.lat, lng: l.lng},
 				mapTypeId: google.maps.MapTypeId.ROAD,
         zoom: l.zoom,
@@ -53,17 +53,18 @@ function initialize() {
   				}
 				]
     };
-	loc.splice(i,1);
-  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		loc.splice(i,1);
+  	var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-	// Update the score
-	$("#score").text("Score: "+score);
+		// Update the score
+		$("#score").text("Score: "+score);
 
-	// Refresh the input field
-	$("#enter").attr("class", "btn btn-primary disabled");
-	$("#enter").prop("disabled", true);
-	$("#country").val("");
-	$("#country").focus();
+		// Refresh the input field
+		$("#enter").attr("class", "btn btn-primary disabled");
+		$("#enter").prop("disabled", true);
+		$("#country").val("");
+		$("#country").focus();
+	}
 }
 
 function validateCountry() {
