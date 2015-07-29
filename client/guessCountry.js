@@ -9,7 +9,7 @@ function initialize() {
 
 	// Game Over!
 	if (numQuestions==0) {
-		$("#answer").text("Your final score: "+score+"/10");
+		$(".answer").text("Your final score: "+score+"/10");
 		$("#answer-div").removeClass("alert alert-danger")
 			.removeClass("alert alert-success")
 			.addClass("alert alert-info");
@@ -60,18 +60,18 @@ function initialize() {
   		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 			// Update the score
-			$("#score").text("Score: "+score);
+			$(".score").text("Score: "+score);
 
 			// Refresh the input field
 			$("#enter").attr("class", "btn btn-primary disabled");
 			$("#enter").prop("disabled", true);
-			$("#country").val("");
-			$("#country").focus();
+			$(".country").val("");
+			$(".country").focus();
 		}
 }
 
 function validateCountry() {
-	var country = $("#country").val().trim();
+	var country = $(".country").val().trim();
 
 	if (country==null || country=="") {
 		alert("Please enter the name of the country.");
@@ -103,14 +103,14 @@ function validateCountry() {
 					}
 
 					if (longCountry.indexOf(country)>-1  || shortCountry.indexOf(country)>-1) {
-						$("#answer").text("Congrats! This is in "+longCountry+".");
+						$(".answer").text("Congrats! This is in "+longCountry+".");
 						$("#answer-div").removeClass("alert alert-danger").addClass("alert alert-success");
 						random = Math.trunc(Math.random() * yesMeme.length);
 						$("#meme").attr("src", yesMeme[random]);
 						score = score + 1;
 					}
 					else {
-						$("#answer").text("Sorry! This is in "+longCountry+".");
+						$(".answer").text("Sorry! This is in "+longCountry+".");
 						$("#answer-div").removeClass("alert alert-success").addClass("alert alert-danger");
 						random = Math.trunc(Math.random() * noMeme.length);
 						$("#meme").attr("src",noMeme[random]);
@@ -146,14 +146,14 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#country").autocomplete({source: listOfCountries});
-	$("#country").on('input', function() {
+	$(".country").autocomplete({source: listOfCountries});
+	$(".country").on('input', function() {
 		$("#enter").attr("class", "btn btn-primary");
 		$("#enter").prop("disabled", false);
 	});
-	$("#country").keyup(function(event) {
+	$(".country").keyup(function(event) {
 		console.log('country entered');
-		if ( (event.keyCode==13) && ($("#country").val().trim()!="") ){
+		if ( (event.keyCode==13) && ($(".country").val().trim()!="") ){
 			validateCountry();
 		}
 	})
