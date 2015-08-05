@@ -5,6 +5,7 @@ var geocoder = new google.maps.Geocoder();
 var numQuestions = 10;
 
 function initialize() {
+	var spinner = new Spinner({}).spin(document.getElementById('spin'));
 	numQuestions--;
 
 	// Game Over!
@@ -58,6 +59,11 @@ function initialize() {
     	};
 			loc.splice(i,1);
   		var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+			google.maps.event.addListenerOnce(map, 'tilesloaded',
+				function() {
+					spinner.stop();
+				}
+			);
 
 			// Update the score
 			$(".score").text("Score: "+score);
@@ -65,13 +71,13 @@ function initialize() {
 			// Refresh the input field
 			$("#enter").attr("class", "btn btn-primary disabled");
 			$("#enter").prop("disabled", true);
-			$(".country").val("");
-			$(".country").focus();
+			$("#country").val("");
+			$("#country").focus();
 		}
 }
 
 function validateCountry() {
-	var country = $(".country").val().trim();
+	var country = $("#country").val().trim();
 
 	if (country==null || country=="") {
 		alert("Please enter the name of the country.");
@@ -130,7 +136,7 @@ function validateCountry() {
 $(document).ready(function() {
 
 	$('#myModal').on('hidden.bs.modal', function () {
-			console.log('hide modal');
+			//console.log('hide modal');
 			$("#nextQuestion").text("Next Question");
 			if (numQuestions==0) {
 				location.reload();
@@ -140,20 +146,19 @@ $(document).ready(function() {
 	});
 
 	$('#myModal').keyup(function(event) {
-		console.log('close modal by enter or space bar');
+		//console.log('close modal by enter or space bar');
 		if ( (event.keyCode==13) || (event.keyCode==32) ){
 			$('#myModal').modal('hide');
 		}
 	});
 
-	$(".country").autocomplete({source: listOfCountries});
-	$(".country").on('input', function() {
-		$("#enter").attr("class", "btn btn-primary");
-		$("#enter").prop("disabled", false);
+	$("#country").autocomplete({source: listOfCountries});
+	$("#country").on('input', function() {
+		$("#enter").removeClass("disabled").attr("class", "btn btn-primary").removeProp("disabled");
 	});
-	$(".country").keyup(function(event) {
-		console.log('country entered');
-		if ( (event.keyCode==13) && ($(".country").val().trim()!="") ){
+	$("#country").keyup(function(event) {
+		//console.log('country entered');
+		if ( (event.keyCode==13) && ($("#country").val().trim()!="") ){
 			validateCountry();
 		}
 	})
