@@ -5,7 +5,7 @@ var geocoder = new google.maps.Geocoder();
 var numQuestions = 10;
 
 function initialize() {
-	var spinner = new Spinner({}).spin(document.getElementById('spin'));
+
 	numQuestions--;
 
 	// Game Over!
@@ -28,7 +28,7 @@ function initialize() {
 
 	// More questions
 	} else {
-
+		var spinner = new Spinner({}).spin(document.getElementById('spin'));
 		var i = Math.trunc(Math.random() * loc.length);
 		l = loc[i];
   	var mapOptions = {
