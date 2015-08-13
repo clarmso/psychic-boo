@@ -5,7 +5,6 @@ var geocoder = new google.maps.Geocoder();
 var numQuestions = 10;
 
 function initialize() {
-
 	numQuestions--;
 
 	// Game Over!
@@ -66,7 +65,7 @@ function initialize() {
 			);
 
 			// Update the score
-			$(".score").text("Score: "+score);
+			$("#score").text("Score: "+score);
 
 			// Refresh the input field
 			$("#enter").attr("class", "btn btn-primary disabled");

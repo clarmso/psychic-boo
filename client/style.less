@@ -4,13 +4,8 @@ html, body{
   padding: 0;
  }
 
-
-p, #score {
-  text-align: right;
-  font-size: 150%;
-}
 p, .answer {
-  font-size: 200%;
+  font-size: 100%;
   text-align: center;
 }
 
@@ -29,13 +24,26 @@ p, .answer {
   width: 100%;
   height: 88%;
   padding-bottom: 10px;
+
+  #country {
+    width: 60%;
+    max-width: 150px;
+  }
+
+  .col-xs-4 {
+    //background-color: yellow;
+    p, #score {
+      text-align: right;
+      font-size: 140%;
+    }
+  }
 }
 
 .meme {
-	width: inherit;
-	max-height: 650px;
-	overflow: hidden;
-  .img {
-    	width: 100%;
+  max-width: inherit;
+  max-height: 300px;
+  overflow: hidden;
+  img {
+    width: 100%;
   }
 }
