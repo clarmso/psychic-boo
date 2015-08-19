@@ -3,8 +3,11 @@ var score = 0;
 var l;
 var geocoder = new google.maps.Geocoder();
 var numQuestions = 10;
+var hasShownIntro = 0;
+var loc = origloc;
 
 function initialize() {
+
 	numQuestions--;
 
 	// Game Over!
@@ -65,7 +68,7 @@ function initialize() {
 			);
 
 			// Update the score
-			$("#score").text("Score: "+score);
+			$("#score").text("Score: "+score+"/10");
 
 			// Refresh the input field
 			$("#enter").attr("class", "btn btn-primary disabled");
@@ -134,11 +137,23 @@ function validateCountry() {
 
 $(document).ready(function() {
 
+
+	if (hasShownIntro==0) {
+		console.log("First time. Show intro.");
+		introJs().setOption('showProgress', true).start();
+		hasShownIntro=1;
+	} else {
+		console.log("Have shown intro before!!");
+	}
+
+
 	$('#myModal').on('hidden.bs.modal', function () {
 			//console.log('hide modal');
 			$("#nextQuestion").text("Next Question");
 			if (numQuestions==0) {
-				location.reload();
+				loc = origloc;
+				numQuestions = 10;
+				initialize();
 			} else {
 				initialize();
 			}
@@ -162,6 +177,7 @@ $(document).ready(function() {
 		}
 	})
 
+
 });
 
-google.maps.event.addDomListener(window, 'load', initialize)
+google.maps.event.addDomListener(window, 'load', initialize);

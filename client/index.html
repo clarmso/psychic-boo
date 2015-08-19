@@ -20,8 +20,12 @@
     <!-- Spinning wheel for loading maps slowly -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
 
+    <!-- Intro for the game -->
+    <script src="https://cdn.jsdelivr.net/intro.js/1.0.0/intro.min.js"></script>
+
     <!--<link rel="stylesheet" href="guessCountry.css">-->
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/intro.js/1.0.0/introjs.min.css" rel="stylesheet">
 
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr7BFn8rNHsqhii7SMk3KByJ3nco4ISFk">
@@ -29,28 +33,27 @@
 
     <script src="locations.js"></script>
     <script src="listOfCountries.js"></script>
-    <script src="meme.js"></script>      
+    <script src="meme.js"></script>
     <script src="guessCountry.js"></script>
   </head>
   <body id="spin">
 
-    <div class="container">
+    <div id="container">
 
-      <h1>Where am I?</h1>
+      <h1 data-step="1" data-intro="Welcome!!!">Where am I?</h1>
 
       <div class="row">
         <div class="col-xs-8">
-          <input id="country" placeholder="Country Name"/>
-          <button id="enter" onclick="validateCountry()" type="button" disabled>Enter</button>
+          <input id="country" placeholder="Country Name" data-step="3" data-intro="Type your answer here"/>
+          <button id="enter" onclick="validateCountry()" type="button" disabled data-step="4" data-intro="Click Enter">Enter</button>
         </div>
         <div class="col-xs-4">
-          <p id="score">Score: 0</p>
+          <p id="score">Score: 0/10</p>
         </div>
       </div>
-      <div id="map-canvas"></div>
+      <div id="map-canvas" data-step="2" data-intro="Look at the map carefully"></div>
 
     </div>
-
 
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog" tabindex="-1">

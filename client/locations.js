@@ -2,7 +2,7 @@
 // The answer of each question is determined by the Google
 // reverse geocoding service, so there's no hacking in the
 // Javascript code to get the answer. ;-)
-var loc = [
+var origloc = [
 	{lat:45.500169, lng: -73.565767, zoom: 15},
 	{lat: 53.5378498, lng: -113.4819752, zoom: 15},
 	{lat: 49.167993, lng: -123.938844, zoom: 15},
