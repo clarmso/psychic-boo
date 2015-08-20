@@ -153,10 +153,8 @@ $(document).ready(function() {
 			if (numQuestions==0) {
 				loc = origloc;
 				numQuestions = 10;
-				initialize();
-			} else {
-				initialize();
 			}
+			initialize();
 	});
 
 	$('#myModal').keyup(function(event) {
