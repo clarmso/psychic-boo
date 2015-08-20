@@ -35,6 +35,7 @@
     <script src="locations.js"></script>
     <script src="listOfCountries.js"></script>
     <script src="meme.js"></script>
+    <script src="cookies.js"></script>
     <script src="guessCountry.js"></script>
   </head>
   <body id="spin">
@@ -49,7 +50,7 @@
           <button id="enter" onclick="validateCountry()" type="button" disabled data-step="4" data-intro="Click Enter">Enter</button>
         </div>
         <div class="col-xs-4">
-          <p id="score">Score: 0/10</p>
+          <p id="score" data-step="5" data-intro="Your wonderful score! :)">Score: 0/10</p>
         </div>
       </div>
       <div id="map-canvas" data-step="2" data-intro="Look at the map carefully"></div>

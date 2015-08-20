@@ -3,7 +3,7 @@ var score = 0;
 var l;
 var geocoder = new google.maps.Geocoder();
 var numQuestions = 10;
-var hasShownIntro = 0;
+var hasShownIntro = docCookies.getItem('hasShownIntro');
 var loc = origloc;
 
 function initialize() {
@@ -137,10 +137,15 @@ function validateCountry() {
 
 $(document).ready(function() {
 
-
-	if (hasShownIntro==0) {
+	if (!hasShownIntro) {
 		console.log("First time. Show intro.");
-		introJs().setOption('showProgress', true).start();
+		introJs()
+			.setOption('showProgress', true)
+			.setOption('tooltipPosition', 'auto')
+			.onexit(function() {
+				docCookies.setItem('hasShownIntro', true);
+			})
+			.start();
 		hasShownIntro=1;
 	} else {
 		console.log("Have shown intro before!!");
