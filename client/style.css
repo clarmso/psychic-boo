@@ -69,3 +69,6 @@ p,
 .meme img {
   width: 100%;
 }
+.introjs-helperNumberLayer {
+  line-height: 12px !important;
+}
