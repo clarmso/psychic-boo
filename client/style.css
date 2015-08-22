@@ -70,5 +70,6 @@ p,
   width: 100%;
 }
 .introjs-helperNumberLayer {
-  line-height: 12px !important;
+  line-height: -100px !important;
+  background-color: green !important;
 }
