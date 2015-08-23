@@ -45,6 +45,13 @@ p,
   padding-left: 45px;
   padding-right: 45px;
 }
+@media screen and (max-width: 500px) {
+  #container {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+  }
+}
 #container #country {
   width: 60%;
   max-width: 160px;
@@ -68,9 +75,4 @@ p,
 }
 .meme img {
   width: 100%;
-}
-.introjs-helperNumberLayer {
-  left: 0px !important;
-  top: 0px !important;
-  line-height: 12px !important;
 }

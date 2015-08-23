@@ -141,7 +141,9 @@ $(document).ready(function() {
 		console.log("First time. Show intro.");
 		introJs()
 			.setOption('showProgress', true)
-			.setOption('tooltipPosition', 'auto')
+			//.setOption('tooltipPosition', 'bottom-middle-aligned')
+			.setOption('showBullets', false)
+			.setOption('showStepNumbers', false)
 			.onexit(function() {
 				docCookies.setItem('hasShownIntro', true);
 			})

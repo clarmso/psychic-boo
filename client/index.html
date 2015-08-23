@@ -45,18 +45,33 @@
 
     <div id="container">
 
-      <h1 data-step="1" data-intro="Welcome!!!">WHERE AM I?</h1>
+      <h1
+        data-step="1"
+        data-intro="Welcome! Let me show you how to play this game."
+        data-position="bottom-middle-aligned">WHERE AM I?</h1>
 
       <div class="row">
         <div class="col-xs-8">
-          <input id="country" placeholder="Country Name" data-step="3" data-intro="Type your answer here"/>
-          <button id="enter" onclick="validateCountry()" type="button" disabled data-step="4" data-intro="Click Enter">Enter</button>
+          <input id="country" placeholder="Country Name"
+            data-step="3"
+            data-intro="Type your answer here."
+            data-position="right"/>
+          <button id="enter" onclick="validateCountry()" type="button" disabled
+            data-step="4"
+            data-intro="Click Enter"
+            data-position="bottom-middle-aligned">Enter</button>
         </div>
         <div class="col-xs-4">
-          <p id="score" data-step="5" data-intro="Your wonderful score! :)">Score: 0/10</p>
+          <p id="score"
+            data-step="5"
+            data-intro="Your wonderful score is here! :)"
+            data-position="left">Score: 0/10</p>
         </div>
       </div>
-      <div id="map-canvas" data-step="2" data-intro="Look at the map carefully"></div>
+      <div id="map-canvas"
+        data-step="2"
+        data-intro="Look at the map carefully."
+        data-position="bottom-middle-aligned"></div>
 
     </div>
 
