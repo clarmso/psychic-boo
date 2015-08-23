@@ -144,6 +144,7 @@ $(document).ready(function() {
 			//.setOption('tooltipPosition', 'bottom-middle-aligned')
 			.setOption('showBullets', false)
 			.setOption('showStepNumbers', false)
+			.setOption('doneLabel', "<b>Play!</b>")
 			.onexit(function() {
 				docCookies.setItem('hasShownIntro', true);
 			})
@@ -186,3 +187,7 @@ $(document).ready(function() {
 });
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
+window.onbeforeunload = function() {
+	return "After reloading this page, a new game will be reinitialized.";
+};
