@@ -1,17 +1,20 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
 var livereload = require('gulp-livereload');
-
+var csso = require('gulp-csso');
+var htmlmin = require('gulp-htmlmin');
 
 gulp.task('less', function() {
     return gulp.src('./style.less')  // only compile the entry file
         .pipe(less())
+        .pipe(csso())
         .pipe(gulp.dest('.'))
         .pipe(livereload());
 });
 
 gulp.task('reload-html', function() {
-    return gulp.src('./index.html').pipe(livereload());
+    return gulp.src('./index.html')
+        .pipe(livereload());
 });
 
 gulp.task('watch', function() {

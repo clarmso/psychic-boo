@@ -8,6 +8,8 @@
   },
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-csso": "^1.0.0",
+    "gulp-htmlmin": "^1.1.4",
     "gulp-watch": "^4.3.4"
   },
   "scripts": {

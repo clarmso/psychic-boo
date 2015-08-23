@@ -187,7 +187,3 @@ $(document).ready(function() {
 });
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-window.onbeforeunload = function() {
-	return "After reloading this page, a new game will be reinitialized.";
-};
