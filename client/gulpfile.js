@@ -14,6 +14,8 @@ gulp.task('less', function() {
 
 gulp.task('reload-html', function() {
     return gulp.src('./index.html')
+        .pipe(htmlmin({collapseWitespace: true}))
+        .pipe(gulp.dest('.'))
         .pipe(livereload());
 });
 

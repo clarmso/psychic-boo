@@ -3,8 +3,8 @@ var score = 0;
 var l;
 var geocoder = new google.maps.Geocoder();
 var numQuestions = 10;
-var hasShownIntro = docCookies.getItem('hasShownIntro');
 var loc = origloc;
+var spinner = new Spinner({});
 
 function initialize() {
 
@@ -25,12 +25,12 @@ function initialize() {
 			$("#meme").attr("src",noMeme[random]);
 		}
 		$("#nextQuestion").text("New Game");
-		console.log("show final score");
+		//console.log("show final score");
 		$('#myModal').modal('show');
 
 	// More questions
 	} else {
-		var spinner = new Spinner({}).spin(document.getElementById('spin'));
+		spinner.spin(document.getElementById('spin'));
 		var i = Math.trunc(Math.random() * loc.length);
 		l = loc[i];
   	var mapOptions = {
@@ -38,12 +38,7 @@ function initialize() {
 				mapTypeId: google.maps.MapTypeId.ROAD,
         zoom: l.zoom,
 				disableDefaultUI: true,
-				disableDoubleClickZoom: true,
-				keyboardShortcuts: false,
-				zoomControl: false,
-				scrollwheel: false,
 				draggable: false,
-				clickable: false,
 				styles: [
 					{
    				"featureType": "transit",
@@ -137,21 +132,21 @@ function validateCountry() {
 
 $(document).ready(function() {
 
-	if (!hasShownIntro) {
-		console.log("First time. Show intro.");
+	if (!docCookies.getItem('hasShownIntro')) {
+		//console.log("First time. Show intro.");
 		introJs()
 			.setOption('showProgress', true)
 			//.setOption('tooltipPosition', 'bottom-middle-aligned')
 			.setOption('showBullets', false)
 			.setOption('showStepNumbers', false)
-			.setOption('doneLabel', "<b>Play!</b>")
+			.setOption('skipLabel', "Skip intro")
+			.setOption('doneLabel', "<b>Start Game!</b>")
 			.onexit(function() {
 				docCookies.setItem('hasShownIntro', true);
 			})
 			.start();
-		hasShownIntro=1;
 	} else {
-		console.log("Have shown intro before!!");
+		//console.log("Have shown intro before!!");
 	}
 
 
