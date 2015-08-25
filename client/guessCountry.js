@@ -5,6 +5,7 @@ var geocoder = new google.maps.Geocoder();
 var numQuestions = 10;
 var loc = origloc;
 var spinner = new Spinner({});
+var Greetings;
 
 function initialize() {
 
@@ -12,6 +13,8 @@ function initialize() {
 
 	// Game Over!
 	if (numQuestions==0) {
+
+		// REACT.js #2
 		$(".answer").text("Your final score: "+score+"/10");
 		$("#answer-div").removeClass("alert alert-danger")
 			.removeClass("alert alert-success")
@@ -66,10 +69,7 @@ function initialize() {
 			$("#score").text("Score: "+score+"/10");
 
 			// Refresh the input field
-			$("#enter").attr("class", "btn btn-primary disabled");
-			$("#enter").prop("disabled", true);
-			$("#country").val("");
-			$("#country").focus();
+			//$("#country").focus();
 		}
 }
 
@@ -132,23 +132,76 @@ function validateCountry() {
 
 $(document).ready(function() {
 
-	if (!docCookies.getItem('hasShownIntro')) {
-		//console.log("First time. Show intro.");
-		introJs()
-			.setOption('showProgress', true)
-			//.setOption('tooltipPosition', 'bottom-middle-aligned')
-			.setOption('showBullets', false)
-			.setOption('showStepNumbers', false)
-			.setOption('skipLabel', "Skip intro")
-			.setOption('doneLabel', "<b>Start Game!</b>")
-			.onexit(function() {
-				docCookies.setItem('hasShownIntro', true);
-			})
-			.start();
-	} else {
-		//console.log("Have shown intro before!!");
-	}
+	Greetings = React.createClass({
+		getInitialState: function() {
 
+			return {
+				enable: false,
+				btnclass: "btn btn-primary disabled",
+				userInput: ""
+			};
+		},
+		render: function() {
+			//console.log("render Greetings");
+			return (
+				<div className="col-xs-8">
+					<input
+						id="country"
+						ref="country"
+						placeholder="Country Name"
+						onChange={this.handleChange}
+						onKeyUp={this.handleEnter}
+						value={this.state.userInput}
+						autoFocus
+						data-step="3"
+						data-intro="Type your answer here."
+						data-position="right"/>
+					<button
+						id="enter"
+						className={this.state.btnclass}
+						disabled={!this.state.enable}
+						onClick={this.handleClick}
+						data-step="4"
+						data-intro="Click 'Enter'"
+						data-position="bottom-middle-aligned">Enter</button>
+				</div>
+			)
+		},
+		componentDidMount: function() {
+			console.log("component will mount");
+			$(React.findDOMNode(this.refs.country)).autocomplete({source: listOfCountries});
+		},
+		componentWillUnmount: function() {
+			console.log("component will unmount");
+		},
+		handleChange: function(event) {
+			//console.log(event.target.value);
+			this.state.userInput = event.target.value;
+			if (event.target.value.length > 0) {
+				this.setState({ enable: true, btnclass: "btn btn-primary"})
+			} else {
+				this.setState({ enable: false, btnclass: "btn btn-primary disabled"});
+			}
+			//console.log("enable: "+this.state.enable+"  btnclass: "+this.state.btnclass);
+		},
+		handleClick: function(event) {
+			validateCountry();
+			this.setState({ userInput: "", enable: false, btnclass: "btn btn-primary disabled" });
+		},
+		handleEnter: function(event) {
+			if ( (event.keyCode==13) && this.state.enable ) {
+				this.handleClick();
+			}
+		}
+	});
+
+	React.render(
+		<Greetings/>,
+		document.getElementById('react-enter')
+	);
+	// NOTE: autocomplete must be called *after* rendering $("#country")
+	// by React.js.
+	//$("#country").autocomplete({source: listOfCountries});
 
 	$('#myModal').on('hidden.bs.modal', function () {
 			//console.log('hide modal');
@@ -167,16 +220,24 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#country").autocomplete({source: listOfCountries});
-	$("#country").on('input', function() {
-		$("#enter").removeClass("disabled").attr("class", "btn btn-primary").removeProp("disabled");
-	});
-	$("#country").keyup(function(event) {
-		//console.log('country entered');
-		if ( (event.keyCode==13) && ($("#country").val().trim()!="") ){
-			validateCountry();
-		}
-	})
+
+
+	if (!docCookies.getItem('hasShownIntro')) {
+		//console.log("First time. Show intro.");
+		introJs()
+			.setOption('showProgress', true)
+			//.setOption('tooltipPosition', 'bottom-middle-aligned')
+			.setOption('showBullets', false)
+			.setOption('showStepNumbers', false)
+			.setOption('skipLabel', "Skip intro")
+			.setOption('doneLabel', "<b>Start Game!</b>")
+			.onexit(function() {
+				docCookies.setItem('hasShownIntro', true);
+			})
+			.start();
+	} else {
+		//console.log("Have shown intro before!!");
+	}
 
 
 });
