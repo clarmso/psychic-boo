@@ -69,17 +69,12 @@ function initialize() {
 			$("#score").text("Score: "+score+"/10");
 
 			// Refresh the input field
-			//$("#country").focus();
+			// Need to move to <Greetings />
+			$("#country").focus();
 		}
 }
 
-function validateCountry() {
-	var country = $("#country").val().trim();
-
-	if (country==null || country=="") {
-		alert("Please enter the name of the country.");
-		return false;
-	}
+function validateCountry(country) {
 
 	var latlng = new google.maps.LatLng(l.lat, l.lng);
 	var addr;
@@ -168,7 +163,7 @@ $(document).ready(function() {
 			)
 		},
 		componentDidMount: function() {
-			console.log("component will mount");
+			//console.log("component did mount");
 			$(React.findDOMNode(this.refs.country)).autocomplete({source: listOfCountries});
 		},
 		componentWillUnmount: function() {
@@ -185,7 +180,7 @@ $(document).ready(function() {
 			//console.log("enable: "+this.state.enable+"  btnclass: "+this.state.btnclass);
 		},
 		handleClick: function(event) {
-			validateCountry();
+			validateCountry(this.state.userInput);
 			this.setState({ userInput: "", enable: false, btnclass: "btn btn-primary disabled" });
 		},
 		handleEnter: function(event) {
