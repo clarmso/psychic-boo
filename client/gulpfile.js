@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var less = require('gulp-less');
 var livereload = require('gulp-livereload');
 var csso = require('gulp-csso');
-var jsx = require('gulp-jsx');
+var react = require('gulp-react');
 
 gulp.task('less', function() {
     return gulp.src('./style.less')  // only compile the entry file
@@ -20,7 +20,7 @@ gulp.task('reload-html', function() {
 
 gulp.task('compile-jsx', function() {
     return gulp.src('./whereami.jsx')
-      .pipe(jsx())
+      .pipe(react())
       .pipe(gulp.dest('.'))
       .pipe(livereload());
 })
