@@ -38,6 +38,7 @@ function initialize() {
 				mapTypeId: google.maps.MapTypeId.ROAD,
         zoom: l.zoom,
 				disableDefaultUI: true,
+				disableDoubleClickZoom: true,
 				draggable: false,
 				scrollwheel:false,
 				styles: [
