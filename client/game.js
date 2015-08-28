@@ -8,6 +8,10 @@ var spinner = new Spinner({});
 var Greetings;
 
 function initialize() {
+	
+}
+/*
+function initialize() {
 
 	numQuestions--;
 
@@ -66,13 +70,13 @@ function initialize() {
 			);
 
 			// Update the score
-			$("#score").text("Score: "+score+"/10");
+			//$("#score").text("Score: "+score+"/10");
 
 			// Refresh the input field
 			// Need to move to <Greetings />
-			$("#country").focus();
+			//$("#country").focus();
 		}
-}
+}*/
 
 function getCountry() {
 	geocoder.geocode({
@@ -104,6 +108,9 @@ function getCountry() {
 	);
 }
 
+
+
+
 function validateCountry(country) {
 
 	var latlng = new google.maps.LatLng(l.lat, l.lng);
@@ -134,6 +141,7 @@ function validateCountry(country) {
 						random = Math.trunc(Math.random() * yesMeme.length);
 						$("#meme").attr("src", yesMeme[random]);
 						score = score + 1;
+						console.log("score updated");
 					}
 					else {
 						$(".answer").text("Sorry! This is in "+longCountry+".");
@@ -151,10 +159,11 @@ function validateCountry(country) {
 			}
 		}
 	);
+	console.log("validateCountry exits");
 }
 
 $(document).ready(function() {
-
+/*
 	$('#myModal').on('hidden.bs.modal', function () {
 			//console.log('hide modal');
 			$("#nextQuestion").text("Next Question");
@@ -190,7 +199,7 @@ $(document).ready(function() {
 	} else {
 		//console.log("Have shown intro before!!");
 	}
-
+*/
 
 });
 
