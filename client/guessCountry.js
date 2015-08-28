@@ -39,6 +39,7 @@ function initialize() {
         zoom: l.zoom,
 				disableDefaultUI: true,
 				draggable: false,
+				scrollwheel:false,
 				styles: [
 					{
    				"featureType": "transit",
