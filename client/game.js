@@ -1,14 +1,15 @@
 var score = 0;
 
 var l;
-var geocoder = new google.maps.Geocoder();
+
 var numQuestions = 10;
 var loc = origloc;
-var spinner = new Spinner({});
 var Greetings;
 
+
+
 function initialize() {
-	
+
 }
 /*
 function initialize() {

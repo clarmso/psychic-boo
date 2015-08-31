@@ -1,4 +1,38 @@
 var spinner = new Spinner({});
+var geocoder = new google.maps.Geocoder();
+
+function refreshMap(l) {
+  spinner.spin(document.getElementById('container'));
+  var mapOptions = {
+    center: { lat: l.lat, lng: l.lng },
+    mapTypeId: google.maps.MapTypeId.ROAD,
+    zoom: l.zoom,
+    disableDefaultUI: true,
+    disableDoubleClickZoom: true,
+    draggable: false,
+    scrollwheel: false,
+    styles: [
+      {
+      "featureType": "transit",
+      "elementType": "labels",
+      "stylers": [{ "visibility": "off" }]
+      },{
+      "featureType": "poi",
+      "elementType": "labels",
+      "stylers": [{ "visibility": "off" }]
+      },{
+      "featureType": "administrative",
+      "stylers": [{ "visibility": "off" }]
+      }
+    ]
+  };
+  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  google.maps.event.addListenerOnce(map, 'tilesloaded',
+    function() {
+      spinner.stop();
+    }
+  );
+}
 
 Greetings = React.createClass({
 
@@ -9,7 +43,6 @@ Greetings = React.createClass({
       userInput: "",
       score: 0,
       latlng: null,
-      loaded: false
     };
   },
   render: function() {
@@ -43,41 +76,11 @@ Greetings = React.createClass({
   componentDidMount: function() {
     console.log("component did mount");
     // TODO: Need npm install react-spin
-    spinner.spin(document.getElementById('container'));
-    //var i = Math.trunc(Math.random() * loc.length);
-    //l = loc[i];
-    l = {lat:45.500169, lng: -73.565767, zoom: 15}; // just one place for now
-    var mapOptions = {
-        center: { lat: l.lat, lng: l.lng},
-        mapTypeId: google.maps.MapTypeId.ROAD,
-        zoom: l.zoom,
-        disableDefaultUI: true,
-        disableDoubleClickZoom: true,
-        draggable: false,
-        scrollwheel: false,
-        styles: [
-          {
-          "featureType": "transit",
-          "elementType": "labels",
-          "stylers": [{ "visibility": "off" }]
-          },{
-          "featureType": "poi",
-          "elementType": "labels",
-          "stylers": [{ "visibility": "off" }]
-          },{
-          "featureType": "administrative",
-          "stylers": [{ "visibility": "off" }]
-          }
-        ]
-      };
-      //loc.splice(i,1);
-      // TODO: Google Maps for react
-      var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-      google.maps.event.addListenerOnce(map, 'tilesloaded',
-        function() {
-          spinner.stop();
-        }
-      );
+    var i = Math.trunc(Math.random() * loc.length);
+  	l = loc[i];
+    this.setState({latlng: l});
+    refreshMap(l);
+    loc.splice(i, 1);
     $(React.findDOMNode(this.refs.country)).autocomplete({source: listOfCountries});
   },
   componentWillUnmount: function() {
@@ -91,42 +94,49 @@ Greetings = React.createClass({
     } else {
       this.setState({ enable: false, btnclass: "btn btn-primary disabled"});
     }
-    //$(React.findDOMNode(this.refs.country)).focus();// after closing modal
-    //console.log("focus?");
-    //this.setState({ score: this.state.score+1 });  // don't check for correct answer for now
-    //console.log("enable: "+this.state.enable+"  btnclass: "+this.state.btnclass);
+
   },
   handleClick: function(event) {
-    //validateCountry(this.state.userInput);
-    var input = this.state.userInput;
+    var input = this.state.userInput.toUpperCase();
     var latlng = this.state.latlng;
-    console.log("handleClick: userInput = "+input);
-    console.log("handleClick: userInput = "+event.target.value);
-    geocoder.geocode({
-  		'latLng': latlng,
-  		'language': "en",
-  		},
-  		function(results, status) {
-  			if (status == google.maps.GeocoderStatus.OK) {
-  				if (results[0]) {
-              var addr = results[0].address_components;
-              // Check address
-              for (i=0; i<addr.length; i++) {
-                if (addr[i].types.indexOf("country")>-1) {
-                  console.log(addr[i].long_name);
-                  if ( (input.toUpperCase() == addr[i].long_name)
-                      || (input.toUpperCase() == addr[i].short_name) ) {
-                        console.log("Correct answer :D");
-                        Greetings.state.score = Greetings.state.score+1;
-                        return null;
+    var me = this;
 
+    geocoder.geocode({
+  		'latLng': new google.maps.LatLng(latlng.lat, latlng.lng),
+  		'language': "en"
+  		},
+      function(result, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            console.log("Geocoder Status OK");
+          	var addr = result[0].address_components;
+          	var longCountry = "";
+          	var shortCountry = "";
+
+          	for (i=0; i<addr.length; i++) {
+          			if (addr[i].types.indexOf("country")>-1) {
+          				longCountry = addr[i].long_name.toUpperCase();
+          				shortCountry = addr[i].short_name.toUpperCase();
+                  if (input === longCountry
+                    || input === shortCountry ) {
+                      me.setState({ score: me.state.score+1 });
                     }
-                }
-              }
-            }
-          }
-          console.log("Wrong answer");
+                  else {
+                    console.log("Wrong answer. Correct answer is "+longCountry);
+                  }
+          			}
+          	}
+            // Set modal messages
+            var i = Math.trunc(Math.random() * loc.length);
+            var l = loc[i];
+            me.setState({latlng: l});
+            refreshMap(l);
+            loc.splice(i, 1);
+            $(React.findDOMNode(me.refs.country)).focus();// after closing modal
+
+        } else {
+          alert("Google Geocoder API is not available.");
         }
+      }
     );
     this.setState({ userInput: "", enable: false, btnclass: "btn btn-primary disabled" });
   },
