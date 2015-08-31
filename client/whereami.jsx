@@ -110,14 +110,11 @@ Greetings = React.createClass({
             console.log("Geocoder Status OK");
           	var addr = result[0].address_components;
           	var longCountry = "";
-          	var shortCountry = "";
 
           	for (i=0; i<addr.length; i++) {
           			if (addr[i].types.indexOf("country")>-1) {
           				longCountry = addr[i].long_name.toUpperCase();
-          				shortCountry = addr[i].short_name.toUpperCase();
-                  if (input === longCountry
-                    || input === shortCountry ) {
+                  if ( input === longCountry ) {
                       me.setState({ score: me.state.score+1 });
                     }
                   else {
@@ -131,7 +128,9 @@ Greetings = React.createClass({
             me.setState({latlng: l});
             refreshMap(l);
             loc.splice(i, 1);
+
             $(React.findDOMNode(me.refs.country)).focus();// after closing modal
+            
 
         } else {
           alert("Google Geocoder API is not available.");
