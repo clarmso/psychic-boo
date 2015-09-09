@@ -89,6 +89,9 @@ Greetings = React.createClass({
               <h4/>
             </div>
             <div className="modal-body">
+              <div className="meme">
+                <img id="meme" src={this.state.memeImg}/>
+              </div>
               <div id="answer-div">
                 <p className={this.state.answerColour}>{this.state.answerMesg}</p>
               </div>
@@ -154,20 +157,25 @@ Greetings = React.createClass({
             console.log("REACT: Geocoder Status OK");
           	var addr = result[0].address_components;
           	var longCountry = "";
+            var random;
 
           	for (i=0; i<addr.length; i++) {
           			if (addr[i].types.indexOf("country")>-1) {
           				longCountry = addr[i].long_name;
                   if ( input === longCountry.toUpperCase() ) {
-                      me.setState({
-                        score: me.state.score+1,
-                        answerColour: "alert alert-success",
-                        answerMesg: "Congrats! This is in "+longCountry+". 😊" });
-                    }
+                    random = Math.trunc(Math.random() * yesMeme.length);
+                    me.setState({
+                      score: me.state.score+1,
+                      answerColour: "alert alert-success",
+                      answerMesg: "Congrats! This is in "+longCountry+". 😊",
+                      memeImg: yesMeme[random] });
+                  }
                   else {
+                    random = Math.trunc(Math.random() * noMeme.length);
                     me.setState({
                       answerColour: "alert alert-danger",
-                      answerMesg: "Sorry! This is in "+longCountry+". 💩" });
+                      answerMesg: "Sorry! This is in "+longCountry+". 💩",
+                      memeImg: noMeme[random] });
 
                     console.log("REACT: Wrong answer. Got "+input+". Correct answer is "+longCountry);
                   }
