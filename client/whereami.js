@@ -46,6 +46,9 @@ Greetings = React.createClass({displayName: "Greetings",
       score: 0,
       latlng: null,
       showModal: false,
+      answerColour: "alert alert-success",
+      answerMesg: "Congrats!",
+      memeImg: yesMeme[0],
     };
   },
 
@@ -86,7 +89,9 @@ Greetings = React.createClass({displayName: "Greetings",
               React.createElement("h4", null)
             ), 
             React.createElement("div", {className: "modal-body"}, 
-              React.createElement("p", null, "Hello World!")
+              React.createElement("div", {id: "answer-div"}, 
+                React.createElement("p", {className: this.state.answerColour}, this.state.answerMesg)
+              )
             ), 
             React.createElement("div", {className: "modal-footer"}, 
               React.createElement("button", {id: "nextQuestion", ref: "nextQuestion", 
@@ -152,11 +157,18 @@ Greetings = React.createClass({displayName: "Greetings",
 
           	for (i=0; i<addr.length; i++) {
           			if (addr[i].types.indexOf("country")>-1) {
-          				longCountry = addr[i].long_name.toUpperCase();
-                  if ( input === longCountry ) {
-                      me.setState({ score: me.state.score+1 });
+          				longCountry = addr[i].long_name;
+                  if ( input === longCountry.toUpperCase() ) {
+                      me.setState({
+                        score: me.state.score+1,
+                        answerColour: "alert alert-success",
+                        answerMesg: "Congrats! This is in "+longCountry+". 😊" });
                     }
                   else {
+                    me.setState({
+                      answerColour: "alert alert-danger",
+                      answerMesg: "Sorry! This is in "+longCountry+". 💩" });
+
                     console.log("REACT: Wrong answer. Got "+input+". Correct answer is "+longCountry);
                   }
           			}
