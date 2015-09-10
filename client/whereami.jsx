@@ -35,7 +35,7 @@ function refreshMap(l) {
   );
 }
 
-Greetings = React.createClass({
+var Greetings = React.createClass({
 
   getInitialState: function() {
     console.log("REACT: getInitialState");
@@ -81,27 +81,29 @@ Greetings = React.createClass({
           <div id="map-canvas"></div>
         </div>
         <div id="myModal" ref="myModal"
-          className="modal fade" role="dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close"
-                onClick={this.closeModal} aria-hidden="true">&times;</button>
-              <h4/>
-            </div>
-            <div className="modal-body">
-              <div className="meme">
-                <img id="meme" src={this.state.memeImg}/>
+          className="modal fade" role="dialog" tabindex="-1">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close"
+                  onClick={this.closeModal} aria-hidden="true">&times;</button>
+                <h4/>
               </div>
-              <div id="answer-div">
-                <p className={this.state.answerColour}>{this.state.answerMesg}</p>
+              <div className="modal-body">
+                <div className="meme">
+                  <img id="meme" src={this.state.memeImg}/>
+                </div>
+                <div id="answer-div">
+                  <p className={this.state.answerColour}>{this.state.answerMesg}</p>
+                </div>
               </div>
-            </div>
-            <div className="modal-footer">
-              <button id="nextQuestion" ref="nextQuestion"
-                type="button"
-                className="btn btn-primary" data-dismiss="modal"
-                autoFocus
-                onClick={this.closeModal}>Next Question</button>
+              <div className="modal-footer">
+                <button id="nextQuestion" ref="nextQuestion"
+                  type="button"
+                  className="btn btn-primary" data-dismiss="modal"
+                  autoFocus
+                  onClick={this.closeModal}>Next Question</button>
+              </div>
             </div>
           </div>
         </div>

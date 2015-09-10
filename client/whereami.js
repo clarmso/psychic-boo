@@ -35,7 +35,7 @@ function refreshMap(l) {
   );
 }
 
-Greetings = React.createClass({displayName: "Greetings",
+var Greetings = React.createClass({displayName: "Greetings",
 
   getInitialState: function() {
     console.log("REACT: getInitialState");
@@ -81,27 +81,29 @@ Greetings = React.createClass({displayName: "Greetings",
           React.createElement("div", {id: "map-canvas"})
         ), 
         React.createElement("div", {id: "myModal", ref: "myModal", 
-          className: "modal fade", role: "dialog"}, 
-          React.createElement("div", {className: "modal-content"}, 
-            React.createElement("div", {className: "modal-header"}, 
-              React.createElement("button", {type: "button", className: "close", 
-                onClick: this.closeModal, "aria-hidden": "true"}, "×"), 
-              React.createElement("h4", null)
-            ), 
-            React.createElement("div", {className: "modal-body"}, 
-              React.createElement("div", {className: "meme"}, 
-                React.createElement("img", {id: "meme", src: this.state.memeImg})
+          className: "modal fade", role: "dialog", tabindex: "-1"}, 
+          React.createElement("div", {className: "modal-dialog"}, 
+            React.createElement("div", {className: "modal-content"}, 
+              React.createElement("div", {className: "modal-header"}, 
+                React.createElement("button", {type: "button", className: "close", 
+                  onClick: this.closeModal, "aria-hidden": "true"}, "×"), 
+                React.createElement("h4", null)
               ), 
-              React.createElement("div", {id: "answer-div"}, 
-                React.createElement("p", {className: this.state.answerColour}, this.state.answerMesg)
+              React.createElement("div", {className: "modal-body"}, 
+                React.createElement("div", {className: "meme"}, 
+                  React.createElement("img", {id: "meme", src: this.state.memeImg})
+                ), 
+                React.createElement("div", {id: "answer-div"}, 
+                  React.createElement("p", {className: this.state.answerColour}, this.state.answerMesg)
+                )
+              ), 
+              React.createElement("div", {className: "modal-footer"}, 
+                React.createElement("button", {id: "nextQuestion", ref: "nextQuestion", 
+                  type: "button", 
+                  className: "btn btn-primary", "data-dismiss": "modal", 
+                  autoFocus: true, 
+                  onClick: this.closeModal}, "Next Question")
               )
-            ), 
-            React.createElement("div", {className: "modal-footer"}, 
-              React.createElement("button", {id: "nextQuestion", ref: "nextQuestion", 
-                type: "button", 
-                className: "btn btn-primary", "data-dismiss": "modal", 
-                autoFocus: true, 
-                onClick: this.closeModal}, "Next Question")
             )
           )
         )
