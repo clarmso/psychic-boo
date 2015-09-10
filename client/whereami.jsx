@@ -81,7 +81,7 @@ var Greetings = React.createClass({
           <div id="map-canvas"></div>
         </div>
         <div id="myModal" ref="myModal"
-          className="modal fade" role="dialog" tabindex="-1">
+          className="modal fade" role="dialog">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -95,6 +95,7 @@ var Greetings = React.createClass({
                 </div>
                 <div id="answer-div">
                   <p className={this.state.answerColour}>{this.state.answerMesg}</p>
+                  <p className="link"><a href="https://www.google.ca/maps/@43.5034938,-80.5327216,15z" target="_blank">Map</a></p>
                 </div>
               </div>
               <div className="modal-footer">
@@ -122,7 +123,7 @@ var Greetings = React.createClass({
     $(React.findDOMNode(this.refs.country))
       .autocomplete({
         source: listOfCountries,
-        minLength: 1 ,
+        minLength: 1,
         select: function(event, ui) {
           me.setState({ userInput: this.value });
         }
@@ -146,7 +147,7 @@ var Greetings = React.createClass({
 
   handleClick: function(event) {
     console.log("REACT: handleClick");
-    var input = this.state.userInput.toUpperCase();
+    var input = this.state.userInput.toUpperCase().trim();
     var latlng = this.state.latlng;
     var me = this;
 

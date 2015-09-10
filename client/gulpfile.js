@@ -7,7 +7,7 @@ var react = require('gulp-react');
 gulp.task('less', function() {
     return gulp.src('./style.less')  // only compile the entry file
         .pipe(less())
-        .pipe(csso())
+        //.pipe(csso())
         .pipe(gulp.dest('.'))
         .pipe(livereload());
 });

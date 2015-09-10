@@ -81,7 +81,7 @@ var Greetings = React.createClass({displayName: "Greetings",
           React.createElement("div", {id: "map-canvas"})
         ), 
         React.createElement("div", {id: "myModal", ref: "myModal", 
-          className: "modal fade", role: "dialog", tabindex: "-1"}, 
+          className: "modal fade", role: "dialog"}, 
           React.createElement("div", {className: "modal-dialog"}, 
             React.createElement("div", {className: "modal-content"}, 
               React.createElement("div", {className: "modal-header"}, 
@@ -94,7 +94,8 @@ var Greetings = React.createClass({displayName: "Greetings",
                   React.createElement("img", {id: "meme", src: this.state.memeImg})
                 ), 
                 React.createElement("div", {id: "answer-div"}, 
-                  React.createElement("p", {className: this.state.answerColour}, this.state.answerMesg)
+                  React.createElement("p", {className: this.state.answerColour}, this.state.answerMesg), 
+                  React.createElement("p", {className: "link"}, React.createElement("a", {href: "https://www.google.ca/maps/@43.5034938,-80.5327216,15z", target: "_blank"}, "Map"))
                 )
               ), 
               React.createElement("div", {className: "modal-footer"}, 
@@ -146,7 +147,7 @@ var Greetings = React.createClass({displayName: "Greetings",
 
   handleClick: function(event) {
     console.log("REACT: handleClick");
-    var input = this.state.userInput.toUpperCase();
+    var input = this.state.userInput.toUpperCase().trim();
     var latlng = this.state.latlng;
     var me = this;
 
