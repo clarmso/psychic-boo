@@ -44,7 +44,7 @@ var Greetings = React.createClass({displayName: "Greetings",
       btnclass: "btn btn-primary disabled",
       userInput: "",
       score: 0,
-      latlng: null,
+      latlng: loc[0],
       showModal: false,
       answerColour: "alert alert-success",
       answerMesg: "Congrats!",
@@ -95,7 +95,13 @@ var Greetings = React.createClass({displayName: "Greetings",
                 ), 
                 React.createElement("div", {id: "answer-div"}, 
                   React.createElement("p", {className: this.state.answerColour}, this.state.answerMesg), 
-                  React.createElement("p", {className: "link"}, React.createElement("a", {href: "https://www.google.ca/maps/@43.5034938,-80.5327216,15z", target: "_blank"}, "Map"))
+                  React.createElement("p", {className: "link"}, 
+                    React.createElement("a", {
+                      href: 'https://www.google.ca/maps?z='
+                        +this.state.latlng.zoom+'&q=loc:'
+                        +this.state.latlng.lat+'+'
+                        +this.state.latlng.lng, target: "_blank"}, "Map")
+                  )
                 )
               ), 
               React.createElement("div", {className: "modal-footer"}, 
@@ -123,7 +129,7 @@ var Greetings = React.createClass({displayName: "Greetings",
     $(React.findDOMNode(this.refs.country))
       .autocomplete({
         source: listOfCountries,
-        minLength: 1 ,
+        minLength: 1,
         select: function(event, ui) {
           me.setState({ userInput: this.value });
         }
@@ -217,9 +223,11 @@ var Greetings = React.createClass({displayName: "Greetings",
       console.log("REACT: done closeModal (1)");
     }
     $(React.findDOMNode(this.refs.country)).focus();
+
   },
   closeModal: function(event) {
     console.log("REACT: closeModal");
+    console.log("This latlng: "+this.state.latlng.lat);
     $(React.findDOMNode(this.refs.myModal)).modal('hide');
     var i = Math.trunc(Math.random() * loc.length);
     var l = loc[i];
@@ -230,7 +238,8 @@ var Greetings = React.createClass({displayName: "Greetings",
 
     $(React.findDOMNode(this.refs.country)).focus();
 
-    }
+  },
+
 });
 
 

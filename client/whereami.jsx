@@ -44,7 +44,7 @@ var Greetings = React.createClass({
       btnclass: "btn btn-primary disabled",
       userInput: "",
       score: 0,
-      latlng: null,
+      latlng: loc[0],
       showModal: false,
       answerColour: "alert alert-success",
       answerMesg: "Congrats!",
@@ -95,7 +95,13 @@ var Greetings = React.createClass({
                 </div>
                 <div id="answer-div">
                   <p className={this.state.answerColour}>{this.state.answerMesg}</p>
-                  <p className="link"><a href="https://www.google.ca/maps/@43.5034938,-80.5327216,15z" target="_blank">Map</a></p>
+                  <p className="link">
+                    <a
+                      href={'https://www.google.ca/maps?z='
+                        +this.state.latlng.zoom+'&q=loc:'
+                        +this.state.latlng.lat+'+'
+                        +this.state.latlng.lng} target="_blank">Map</a>
+                  </p>
                 </div>
               </div>
               <div className="modal-footer">
@@ -217,9 +223,11 @@ var Greetings = React.createClass({
       console.log("REACT: done closeModal (1)");
     }
     $(React.findDOMNode(this.refs.country)).focus();
+
   },
   closeModal: function(event) {
     console.log("REACT: closeModal");
+    console.log("This latlng: "+this.state.latlng.lat);
     $(React.findDOMNode(this.refs.myModal)).modal('hide');
     var i = Math.trunc(Math.random() * loc.length);
     var l = loc[i];
@@ -230,7 +238,8 @@ var Greetings = React.createClass({
 
     $(React.findDOMNode(this.refs.country)).focus();
 
-    }
+  },
+
 });
 
 
