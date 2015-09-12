@@ -65,8 +65,7 @@ var Greetings = React.createClass({
                 placeholder="Country Name"
                 onChange={this.handleChange}
                 onKeyUp={this.handleEnter}
-                value={this.state.userInput}
-                autoFocus/>
+                value={this.state.userInput}/>  
               <button
                 id="enter"
                 bsStyle="danger"
