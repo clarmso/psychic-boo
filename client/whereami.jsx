@@ -65,7 +65,7 @@ var Greetings = React.createClass({
                 placeholder="Country Name"
                 onChange={this.handleChange}
                 onKeyUp={this.handleEnter}
-                value={this.state.userInput}/>  
+                value={this.state.userInput}/>
               <button
                 id="enter"
                 bsStyle="danger"
@@ -119,12 +119,13 @@ var Greetings = React.createClass({
 
   componentDidMount: function() {
     console.log("REACT: componentDidMount");
+    // Need to abstract the refresh map part (**)
     var i = Math.trunc(Math.random() * loc.length);
-    me = this;
-  	l = loc[i];
+    l = loc[i];
     this.setState({latlng: l});
     refreshMap(l);
     loc.splice(i, 1);
+    me = this;
     $(React.findDOMNode(this.refs.country))
       .autocomplete({
         source: listOfCountries,
@@ -132,7 +133,21 @@ var Greetings = React.createClass({
         select: function(event, ui) {
           me.setState({ userInput: this.value });
         }
-      })
+      });
+    $(React.findDOMNode(me.refs.myModal)).on('shown.bs.modal', function(){
+      me.setState({showModal: true});
+      console.log("showModal: true");
+    });
+    $(React.findDOMNode(me.refs.myModal)).on('hidden.bs.modal', function(){
+      me.setState({showModal: false});
+      // Get the next question (**)
+      var i = Math.trunc(Math.random() * loc.length);
+      var l = loc[i];
+      me.setState({latlng: l});
+      refreshMap(l);
+      loc.splice(i, 1);
+      console.log("showModal: false");
+    });
   },
 
   componentWillUnmount: function() {
@@ -155,12 +170,16 @@ var Greetings = React.createClass({
     var input = this.state.userInput.toUpperCase().trim();
     var latlng = this.state.latlng;
     var me = this;
+    this.setState({ enable: false, btnclass: "btn btn-primary disabled" });
+
+    console.log(event.keyCode);
 
     geocoder.geocode({
   		'latLng': new google.maps.LatLng(latlng.lat, latlng.lng),
   		'language': "en"
   		},
       function(result, status) {
+
         if (status == google.maps.GeocoderStatus.OK) {
             console.log("REACT: Geocoder Status OK");
           	var addr = result[0].address_components;
@@ -191,8 +210,8 @@ var Greetings = React.createClass({
           	}
             console.log("REACT: show modal");
             $(React.findDOMNode(me.refs.myModal)).modal('show');
-            me.setState({ showModal: true });
             console.log("REACT: focus on country field?");
+            me.setState({ userInput: ""});
             $(React.findDOMNode(me.refs.country)).focus();
 
         } else {
@@ -200,7 +219,7 @@ var Greetings = React.createClass({
         }
       }
     );
-    this.setState({ enable: false, btnclass: "btn btn-primary disabled" });
+
   },
 
   handleEnter: function(event) {
@@ -211,7 +230,7 @@ var Greetings = React.createClass({
         this.closeModal(event);
         console.log("REACT: done closeModal (1)");
       } else if (this.state.enable) {
-        console.log("REACT: Pressed Enter after entering an anser");
+        console.log("REACT: Pressed Enter after entering an answer");
         this.handleClick();
         console.log("REACT: done handleClick");
       }
@@ -228,15 +247,9 @@ var Greetings = React.createClass({
     console.log("REACT: closeModal");
     console.log("This latlng: "+this.state.latlng.lat);
     $(React.findDOMNode(this.refs.myModal)).modal('hide');
-    var i = Math.trunc(Math.random() * loc.length);
-    var l = loc[i];
-    this.setState({latlng: l});
-    refreshMap(l);
-    loc.splice(i, 1);
-    this.setState({showModal: false, userInput: ""});
-
     $(React.findDOMNode(this.refs.country)).focus();
-
+    $(React.findDOMNode(this.refs.country)).value='';
+    this.setState({ userInput: ""});
   },
 
 });
