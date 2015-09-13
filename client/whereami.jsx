@@ -3,6 +3,7 @@ var geocoder = new google.maps.Geocoder();
 
 
 function refreshMap(l) {
+  console.log("refreshMap: latlng = "+l.lat+" "+l.lng);;
   spinner.spin(document.getElementById('container'));
   var mapOptions = {
     center: { lat: l.lat, lng: l.lng },
@@ -44,11 +45,13 @@ var Greetings = React.createClass({
       btnclass: "btn btn-primary disabled",
       userInput: "",
       score: 0,
-      latlng: loc[0],
+      loc: origloc,
+      latlng: origloc[0],
       showModal: false,
       answerColour: "alert alert-success",
       answerMesg: "Congrats!",
       memeImg: yesMeme[0],
+      numQuestions: 0,
     };
   },
 
@@ -113,6 +116,33 @@ var Greetings = React.createClass({
             </div>
           </div>
         </div>
+        <div id="finalResModal" ref="finalResModal"
+          className="modal fade" role="dialog">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close"
+                  onClick={this.closeResModal} aria-hidden="true">&times;</button>
+                <h4/>
+              </div>
+              <div className="modal-body">
+                <div className="meme">
+                  <img id="meme" src={this.state.memeImg}/>
+                </div>
+                <div id="answer-div">
+                  <p className={this.state.answerColour}>{this.state.answerMesg}</p>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button id="newGame" ref="newGame"
+                  type="button"
+                  className="btn btn-primary" data-dismiss="modal"
+                  autoFocus
+                  onClick={this.closeResModal}>New Game</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   },
@@ -120,12 +150,17 @@ var Greetings = React.createClass({
   componentDidMount: function() {
     console.log("REACT: componentDidMount");
     // Need to abstract the refresh map part (**)
-    var i = Math.trunc(Math.random() * loc.length);
-    l = loc[i];
-    this.setState({latlng: l});
-    refreshMap(l);
-    loc.splice(i, 1);
     me = this;
+    var getNextMap = function() {
+      var i = Math.trunc(Math.random() * me.state.loc.length);
+      var l = me.state.loc[i];
+      me.state.loc.splice(i, 1);
+      me.setState({ latlng: l });
+      refreshMap(l);
+      console.log("loc length: "+me.state.loc.length+" i = "+i);
+    };
+    getNextMap();
+
     $(React.findDOMNode(this.refs.country))
       .autocomplete({
         source: listOfCountries,
@@ -140,12 +175,27 @@ var Greetings = React.createClass({
     });
     $(React.findDOMNode(me.refs.myModal)).on('hidden.bs.modal', function(){
       me.setState({showModal: false});
-      // Get the next question (**)
-      var i = Math.trunc(Math.random() * loc.length);
-      var l = loc[i];
-      me.setState({latlng: l});
-      refreshMap(l);
-      loc.splice(i, 1);
+      console.log("REACT: questions answered = "+me.state.numQuestions);
+      if (me.state.numQuestions < 10) {
+        // Get the next question (**)
+        getNextMap();
+
+      } else {
+        // Game over!
+        me.setState({
+          answerMesg: "Your final score: "+me.state.score+"/10",
+          answerColour: "alert alert-info"
+        });
+        if (me.state.score>5) {
+          random = Math.trunc(Math.random() * yesMeme.length);
+          me.setState({ memeImg: yesMeme[random] });
+        }	else {
+          random = Math.trunc(Math.random() * noMeme.length);
+          me.setState({ memeImg: noMeme[random] });
+        }
+        $(React.findDOMNode(me.refs.finalResModal)).modal('show');
+
+      }
       console.log("showModal: false");
     });
   },
@@ -172,8 +222,6 @@ var Greetings = React.createClass({
     var me = this;
     this.setState({ enable: false, btnclass: "btn btn-primary disabled" });
 
-    console.log(event.keyCode);
-
     geocoder.geocode({
   		'latLng': new google.maps.LatLng(latlng.lat, latlng.lng),
   		'language': "en"
@@ -195,14 +243,16 @@ var Greetings = React.createClass({
                       score: me.state.score+1,
                       answerColour: "alert alert-success",
                       answerMesg: "Congrats! This is in "+longCountry+". 😊",
-                      memeImg: yesMeme[random] });
+                      memeImg: yesMeme[random],
+                      numQuestions: me.state.numQuestions+1 });
                   }
                   else {
                     random = Math.trunc(Math.random() * noMeme.length);
                     me.setState({
                       answerColour: "alert alert-danger",
                       answerMesg: "Sorry! This is in "+longCountry+". 💩",
-                      memeImg: noMeme[random] });
+                      memeImg: noMeme[random],
+                      numQuestions: me.state.numQuestions+1 });
 
                     console.log("REACT: Wrong answer. Got "+input+". Correct answer is "+longCountry);
                   }
@@ -219,11 +269,9 @@ var Greetings = React.createClass({
         }
       }
     );
-
   },
 
   handleEnter: function(event) {
-
     if (event.keyCode==13) {
       if (this.state.showModal) {
         console.log("REACT: Pressed Enter and modal opened");
@@ -233,6 +281,9 @@ var Greetings = React.createClass({
         console.log("REACT: Pressed Enter after entering an answer");
         this.handleClick();
         console.log("REACT: done handleClick");
+      } else if (this.state.score > 9) {
+        console.log("REACT: Pressed Enter to close result modal");
+        this.closeResModal();
       }
     }
     else if ((event.keyCode==32) && (this.state.showModal)) {
@@ -241,15 +292,22 @@ var Greetings = React.createClass({
       console.log("REACT: done closeModal (1)");
     }
     $(React.findDOMNode(this.refs.country)).focus();
-
   },
+
   closeModal: function(event) {
     console.log("REACT: closeModal");
-    console.log("This latlng: "+this.state.latlng.lat);
     $(React.findDOMNode(this.refs.myModal)).modal('hide');
     $(React.findDOMNode(this.refs.country)).focus();
     $(React.findDOMNode(this.refs.country)).value='';
     this.setState({ userInput: ""});
+  },
+
+  closeResModal: function(event) {
+    console.log("REACT: closeResModal");
+    $(React.findDOMNode(this.refs.finalResModal)).modal('hide');
+    $(React.findDOMNode(this.refs.country)).focus();
+    $(React.findDOMNode(this.refs.country)).value='';
+    this.setState({ userInput: "", score: 0, loc: origloc });
   },
 
 });
