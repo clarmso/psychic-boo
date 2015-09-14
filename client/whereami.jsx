@@ -47,7 +47,6 @@ var Greetings = React.createClass({
       score: 0,
       loc: origloc,
       latlng: origloc[0],
-      showModal: false,
       answerColour: "alert alert-success",
       answerMesg: "Congrats!",
       memeImg: yesMeme[0],
@@ -83,7 +82,8 @@ var Greetings = React.createClass({
           <div id="map-canvas"></div>
         </div>
         <div id="myModal" ref="myModal"
-          className="modal fade" role="dialog">
+          className="modal fade" role="dialog" tabIndex="-1"
+          onKeyUp={this.closeModalDiv}>
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -170,12 +170,14 @@ var Greetings = React.createClass({
         }
       });
     $(React.findDOMNode(me.refs.myModal)).on('shown.bs.modal', function(){
-      me.setState({showModal: true});
-      console.log("showModal: true");
+      $(React.findDOMNode(me.refs.myModal)).focus();
     });
     $(React.findDOMNode(me.refs.myModal)).on('hidden.bs.modal', function(){
-      me.setState({showModal: false});
       console.log("REACT: questions answered = "+me.state.numQuestions);
+      // When the modal is closed by clicking the grey overlay,
+      // the field need to be focused when the modal is closed
+      // completely, not at the time when closeModal is called.
+      $(React.findDOMNode(me.refs.country)).focus();
       if (me.state.numQuestions < 10) {
         // Get the next question (**)
         getNextMap();
@@ -196,7 +198,7 @@ var Greetings = React.createClass({
         $(React.findDOMNode(me.refs.finalResModal)).modal('show');
 
       }
-      console.log("showModal: false");
+
     });
   },
 
@@ -220,7 +222,7 @@ var Greetings = React.createClass({
     var input = this.state.userInput.toUpperCase().trim();
     var latlng = this.state.latlng;
     var me = this;
-    this.setState({ enable: false, btnclass: "btn btn-primary disabled" });
+    //this.setState({ enable: false, btnclass: "btn btn-primary disabled" });
 
     geocoder.geocode({
   		'latLng': new google.maps.LatLng(latlng.lat, latlng.lng),
@@ -260,9 +262,8 @@ var Greetings = React.createClass({
           	}
             console.log("REACT: show modal");
             $(React.findDOMNode(me.refs.myModal)).modal('show');
-            console.log("REACT: focus on country field?");
             me.setState({ userInput: ""});
-            $(React.findDOMNode(me.refs.country)).focus();
+            //$(React.findDOMNode(me.refs.country)).focus();
 
         } else {
           alert("Google Geocoder API is not available.");
@@ -273,41 +274,29 @@ var Greetings = React.createClass({
 
   handleEnter: function(event) {
     if (event.keyCode==13) {
-      if (this.state.showModal) {
-        console.log("REACT: Pressed Enter and modal opened");
-        this.closeModal(event);
-        console.log("REACT: done closeModal (1)");
-      } else if (this.state.enable) {
-        console.log("REACT: Pressed Enter after entering an answer");
-        this.handleClick();
-        console.log("REACT: done handleClick");
-      } else if (this.state.score > 9) {
-        console.log("REACT: Pressed Enter to close result modal");
-        this.closeResModal();
-      }
+      this.handleClick();
     }
-    else if ((event.keyCode==32) && (this.state.showModal)) {
-      console.log("REACT: Pressed space bar to close modal");
-      this.closeModal(event);
-      console.log("REACT: done closeModal (1)");
-    }
-    $(React.findDOMNode(this.refs.country)).focus();
   },
 
+  closeModalDiv: function(event) {
+    if ( (event.keyCode==13) || (event.keyCode==32) ){
+      this.closeModal(event);
+    }
+  },
   closeModal: function(event) {
-    console.log("REACT: closeModal");
     $(React.findDOMNode(this.refs.myModal)).modal('hide');
-    $(React.findDOMNode(this.refs.country)).focus();
-    $(React.findDOMNode(this.refs.country)).value='';
-    this.setState({ userInput: ""});
+    //$(React.findDOMNode(this.refs.country)).value='';
+    //this.setState({ userInput: ""});
   },
 
   closeResModal: function(event) {
     console.log("REACT: closeResModal");
-    $(React.findDOMNode(this.refs.finalResModal)).modal('hide');
-    $(React.findDOMNode(this.refs.country)).focus();
-    $(React.findDOMNode(this.refs.country)).value='';
-    this.setState({ userInput: "", score: 0, loc: origloc });
+    if ( (event.keyCode==13) || (event.keyCode==32) ){
+      $(React.findDOMNode(this.refs.finalResModal)).modal('hide');
+      $(React.findDOMNode(this.refs.country)).focus();
+      $(React.findDOMNode(this.refs.country)).value='';
+      this.setState({ userInput: "", score: 0, loc: origloc });
+    }
   },
 
 });
