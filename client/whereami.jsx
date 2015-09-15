@@ -1,6 +1,5 @@
-var spinner = new Spinner({});
-var geocoder = new google.maps.Geocoder();
-
+const spinner = new Spinner({});
+const geocoder = new google.maps.Geocoder();
 
 function refreshMap(l) {
   console.log("refreshMap: latlng = "+l.lat+" "+l.lng);;
@@ -110,7 +109,6 @@ var Greetings = React.createClass({
                 <button id="nextQuestion" ref="nextQuestion"
                   type="button"
                   className="btn btn-primary" data-dismiss="modal"
-                  autoFocus
                   onClick={this.closeModal}>Next Question</button>
               </div>
             </div>
@@ -138,7 +136,6 @@ var Greetings = React.createClass({
                 <button id="newGame" ref="newGame"
                   type="button"
                   className="btn btn-primary" data-dismiss="modal"
-                  autoFocus
                   onClick={this.closeResModal}>New Game</button>
               </div>
             </div>
@@ -300,8 +297,6 @@ var Greetings = React.createClass({
   },
 
 });
-
-
 
 React.render(
   <Greetings/>,
