@@ -45,7 +45,7 @@ var Greetings = React.createClass({displayName: "Greetings",
       btnclass: "btn btn-primary disabled",
       userInput: "",
       score: 0,
-      loc: origloc,
+      loc: origloc.slice(),
       latlng: origloc[0],
       answerColour: "alert alert-success",
       answerMesg: "Congrats!",
@@ -59,27 +59,27 @@ var Greetings = React.createClass({displayName: "Greetings",
     return (
       React.createElement("div", null, 
         React.createElement("div", {id: "container"}, 
-          React.createElement("h1", null, "WHERE AM I?"), 
-          React.createElement("div", {className: "row"}, 
-            React.createElement("div", {className: "col-xs-8"}, 
-              React.createElement("input", {
-                id: "country", ref: "country", 
-                placeholder: "Country Name", 
-                onChange: this.handleChange, 
-                onKeyUp: this.handleEnter, 
-                value: this.state.userInput}), 
-              React.createElement("button", {
-                id: "enter", 
-                bsStyle: "danger", 
-                className: this.state.btnclass, 
-                disabled: !this.state.enable, 
-                onClick: this.handleClick}, "Enter")
-            ), 
-            React.createElement("div", {className: "col-xs-4"}, 
-              React.createElement("p", {id: "score"}, "Score: ", this.state.score, "/10")
-            )
-          ), 
-          React.createElement("div", {id: "map-canvas"})
+           React.createElement("h1", null, "WHERE AM I?"), 
+           React.createElement("div", {className: "row"}, 
+             React.createElement("div", {className: "col-xs-8"}, 
+               React.createElement("input", {
+                 id: "country", ref: "country", 
+                 placeholder: "Country Name", 
+                 onChange: this.handleChange, 
+                 onKeyUp: this.handleEnter, 
+                 value: this.state.userInput}), 
+               React.createElement("button", {
+                 id: "enter", 
+                 bsStyle: "danger", 
+                 className: this.state.btnclass, 
+                 disabled: !this.state.enable, 
+                 onClick: this.handleClick}, "Enter")
+             ), 
+             React.createElement("div", {className: "col-xs-4"}, 
+               React.createElement("p", {id: "score"}, "Score: ", this.state.score, "/10")
+             )
+           ), 
+           React.createElement("div", {id: "map-canvas"})
         ), 
         React.createElement("div", {id: "myModal", ref: "myModal", 
           className: "modal fade", role: "dialog", tabIndex: "-1", 
@@ -117,7 +117,8 @@ var Greetings = React.createClass({displayName: "Greetings",
           )
         ), 
         React.createElement("div", {id: "finalResModal", ref: "finalResModal", 
-          className: "modal fade", role: "dialog"}, 
+          className: "modal fade", role: "dialog", tabIndex: "-1", 
+          onKeyUp: this.closeResModalDiv}, 
           React.createElement("div", {className: "modal-dialog"}, 
             React.createElement("div", {className: "modal-content"}, 
               React.createElement("div", {className: "modal-header"}, 
@@ -179,26 +180,27 @@ var Greetings = React.createClass({displayName: "Greetings",
       // completely, not at the time when closeModal is called.
       $(React.findDOMNode(me.refs.country)).focus();
       if (me.state.numQuestions < 10) {
-        // Get the next question (**)
         getNextMap();
-
       } else {
         // Game over!
-        me.setState({
-          answerMesg: "Your final score: "+me.state.score+"/10",
-          answerColour: "alert alert-info"
-        });
+        var img;
         if (me.state.score>5) {
           random = Math.trunc(Math.random() * yesMeme.length);
-          me.setState({ memeImg: yesMeme[random] });
+          img = yesMeme[random];
         }	else {
           random = Math.trunc(Math.random() * noMeme.length);
-          me.setState({ memeImg: noMeme[random] });
+          img = noMeme[random];
         }
+        me.setState({
+          answerMesg: "Your final score: "+me.state.score+"/10",
+          answerColour: "alert alert-info", memeImg: img
+        });
         $(React.findDOMNode(me.refs.finalResModal)).modal('show');
-
       }
-
+    });
+    $(React.findDOMNode(me.refs.finalResModal)).on('hidden.bs.modal', function(){
+      $(React.findDOMNode(me.refs.country)).focus();
+      getNextMap();
     });
   },
 
@@ -263,7 +265,6 @@ var Greetings = React.createClass({displayName: "Greetings",
             console.log("REACT: show modal");
             $(React.findDOMNode(me.refs.myModal)).modal('show');
             me.setState({ userInput: ""});
-            //$(React.findDOMNode(me.refs.country)).focus();
 
         } else {
           alert("Google Geocoder API is not available.");
@@ -285,18 +286,17 @@ var Greetings = React.createClass({displayName: "Greetings",
   },
   closeModal: function(event) {
     $(React.findDOMNode(this.refs.myModal)).modal('hide');
-    //$(React.findDOMNode(this.refs.country)).value='';
-    //this.setState({ userInput: ""});
   },
 
+  closeResModalDiv: function(event) {
+    if ( (event.keyCode==13) || (event.keyCode==32) ){
+      this.closeResModal(event);
+    }
+  },
   closeResModal: function(event) {
     console.log("REACT: closeResModal");
-    if ( (event.keyCode==13) || (event.keyCode==32) ){
-      $(React.findDOMNode(this.refs.finalResModal)).modal('hide');
-      $(React.findDOMNode(this.refs.country)).focus();
-      $(React.findDOMNode(this.refs.country)).value='';
-      this.setState({ userInput: "", score: 0, loc: origloc });
-    }
+    $(React.findDOMNode(this.refs.finalResModal)).modal('hide');
+    this.setState({ userInput: "", score: 0, loc: origloc.slice(), numQuestions: 0 });
   },
 
 });

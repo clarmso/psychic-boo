@@ -1,5 +1,5 @@
 // All countries around the world in alphabetical order.
-var listOfCountries = [
+const listOfCountries = [
 	"Afghanistan",
 	"Akrotiri",
 	"Albania",
