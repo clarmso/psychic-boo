@@ -1,39 +1,4 @@
-const spinner = new Spinner({});
-const geocoder = new google.maps.Geocoder();
-
-function refreshMap(l) {
-  console.log("refreshMap: latlng = "+l.lat+" "+l.lng);;
-  spinner.spin(document.getElementById('container'));
-  var mapOptions = {
-    center: { lat: l.lat, lng: l.lng },
-    mapTypeId: google.maps.MapTypeId.ROAD,
-    zoom: l.zoom,
-    disableDefaultUI: true,
-    disableDoubleClickZoom: true,
-    draggable: false,
-    scrollwheel: false,
-    styles: [
-      {
-      "featureType": "transit",
-      "elementType": "labels",
-      "stylers": [{ "visibility": "off" }]
-      },{
-      "featureType": "poi",
-      "elementType": "labels",
-      "stylers": [{ "visibility": "off" }]
-      },{
-      "featureType": "administrative",
-      "stylers": [{ "visibility": "off" }]
-      }
-    ]
-  };
-  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  google.maps.event.addListenerOnce(map, 'tilesloaded',
-    function() {
-      spinner.stop();
-    }
-  );
-}
+var geocoder = new google.maps.Geocoder();
 
 var Greetings = React.createClass({
 
@@ -147,18 +112,54 @@ var Greetings = React.createClass({
 
   componentDidMount: function() {
     console.log("REACT: componentDidMount");
-    // Need to abstract the refresh map part (**)
+
+    // Add GoogleMap
+    const spinner = new Spinner({});
+    const mapOptions = {
+      center: { lat: 0, lng: 0 },
+      zoom: 10,
+      mapTypeId: google.maps.MapTypeId.ROAD,
+      disableDefaultUI: true,
+      disableDoubleClickZoom: true,
+      draggable: false,
+      scrollwheel: false,
+      styles: [
+        {
+        "featureType": "transit",
+        "elementType": "labels",
+        "stylers": [{ "visibility": "off" }]
+        },{
+        "featureType": "poi",
+        "elementType": "labels",
+        "stylers": [{ "visibility": "off" }]
+        },{
+        "featureType": "administrative",
+        "stylers": [{ "visibility": "off" }]
+        }
+      ]
+    };
+    const map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    google.maps.event.addListener(map, 'tilesloaded',
+      function() {
+        spinner.stop();
+      }
+    );
+
+    // What to do when the next question is presented?
     me = this;
     var getNextMap = function() {
       var i = Math.trunc(Math.random() * me.state.loc.length);
       var l = me.state.loc[i];
       me.state.loc.splice(i, 1);
       me.setState({ latlng: l });
-      refreshMap(l);
+      spinner.spin(document.getElementById('container'));
+      map.setCenter({lat: l.lat, lng: l.lng});
+      map.setZoom(l.zoom);
       console.log("loc length: "+me.state.loc.length+" i = "+i);
     };
-    getNextMap();
 
+    // Define all listeners for modal:
+    // What to do when the modals are closed/opened?
     $(React.findDOMNode(this.refs.country))
       .autocomplete({
         source: listOfCountries,
@@ -199,6 +200,9 @@ var Greetings = React.createClass({
       $(React.findDOMNode(me.refs.country)).focus();
       getNextMap();
     });
+
+    // Load the map for the first question
+    getNextMap();
   },
 
   componentWillUnmount: function() {
@@ -221,7 +225,6 @@ var Greetings = React.createClass({
     var input = this.state.userInput.toUpperCase().trim();
     var latlng = this.state.latlng;
     var me = this;
-    //this.setState({ enable: false, btnclass: "btn btn-primary disabled" });
 
     geocoder.geocode({
   		'latLng': new google.maps.LatLng(latlng.lat, latlng.lng),
