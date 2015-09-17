@@ -201,6 +201,29 @@ var Greetings = React.createClass({displayName: "Greetings",
       getNextMap();
     });
 
+    if (!docCookies.getItem('hasShownIntro')) {
+      //console.log("First time. Show intro.");
+      introJs()
+        .setOption('showProgress', true)
+        .setOption('showBullets', false)
+        .setOption('showStepNumbers', false)
+        .setOption('skipLabel', "Skip intro")
+        .setOption('doneLabel', "<b>Start Game!</b>")
+        .onexit(function() {
+          docCookies.setItem('hasShownIntro', true);
+        })
+        .setOptions({ steps: [
+          { intro: "Welcome! Let me show you how to play this game." },
+          { element: '#map-canvas', intro: "Study at the map carefully.", position: 'bottom-middle-aligned' },
+          { element: '#country', intro: "Type your answer here.", position: 'right' },
+          { element: '#enter', intro: "Click 'Enter'", position: 'bottom-middle-aligned' },
+          { element: '#score', intro: "Your wonderful score! ☺", position: 'left' }
+        ] })
+      .start();
+    } else {
+      //console.log("Have shown intro before!!");
+    }
+
     // Load the map for the first question
     getNextMap();
   },
