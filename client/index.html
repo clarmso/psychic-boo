@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <title>Where am I?</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
 
     <!-- Bootstrap -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -13,7 +13,10 @@
 
     <!-- jquery-ui for autocomplete -->
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+    <!-- React.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
 
     <!-- Spinning wheel for loading maps slowly -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
@@ -23,83 +26,25 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/1.0.0/introjs.min.css" rel="stylesheet">
 
     <!-- Favourite font combo -->
-    <link href='http://fonts.googleapis.com/css?family=Francois+One|Lato' rel='stylesheet' type='text/css'>
+    <link href="http://fonts.googleapis.com/css?family=Francois+One|Lato" rel="stylesheet" type="text/css">
 
     <!-- My CSS generated via style.less -->
     <link rel="stylesheet" href="style.css">
 
     <!-- Google geocoding API key -->
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr7BFn8rNHsqhii7SMk3KByJ3nco4ISFk">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmonMyI0J4tOjahlaXhW1eLPZbUDywONA">
 		</script>
 
-    <!-- My Javascript program -->
-    <script src="locations.js"></script>
-    <script src="listOfCountries.js"></script>
-    <script src="meme.js"></script>
-    <script src="cookies.js"></script>
-    <script src="guessCountry.js"></script>
-
   </head>
-  <body id="spin">
-
-    <div id="container">
-
-      <h1
-        data-step="1"
-        data-intro="Welcome! Let me show you how to play this game."
-        data-position="bottom-middle-aligned">WHERE AM I?</h1>
-
-      <div class="row">
-        <div class="col-xs-8">
-          <input id="country" placeholder="Country Name"
-            data-step="3"
-            data-intro="Type your answer here."
-            data-position="right"/>
-          <button id="enter" onclick="validateCountry()" type="button" disabled
-            data-step="4"
-            data-intro="Click 'Enter'"
-            data-position="bottom-middle-aligned">Enter</button>
-        </div>
-        <div class="col-xs-4">
-          <p id="score"
-            data-step="5"
-            data-intro="Your wonderful score! ☺"
-            data-position="left">Score: 0/10</p>
-        </div>
-      </div>
-      <div id="map-canvas"
-        data-step="2"
-        data-intro="Study the map carefully."
-        data-position="bottom-middle-aligned"></div>
-
-    </div>
-
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog" tabindex="-1">
-      <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"
-              aria-hidden="true">&times;</button>
-              <h4/>
-        </div>
-        <div class="modal-body">
-          <div class="meme">
-            <img id="meme"/>
-          </div>
-          <div id="answer-div">
-            <p class="answer"><p/>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button id="nextQuestion" type="button" class="btn btn-primary" data-dismiss="modal">Next Question</button>
-        </div>
-      </div>
-    </div>
-
-
+  <body>
+    <div id="react-enter"/>
   </body>
+
+  <!-- My Javascript program -->
+  <script src="locations.js"></script>
+  <script src="listOfCountries.js"></script>
+  <script src="meme.js"></script>
+  <script src="cookies.js"></script>
+  <script src="whereami.js"></script>
+
 </html>

@@ -1,4 +1,4 @@
-var noMeme = [
+const noMeme = [
 	"http://i.imgur.com/ub9gzny.png",
 	"http://i.imgur.com/KXD0v4f.png",
 	"http://i.imgur.com/zaiJFhJ.png",
@@ -15,7 +15,7 @@ var noMeme = [
 	"http://i.imgur.com/7VmjZVW.png"
 ];
 
-var yesMeme = [
+const yesMeme = [
 	"http://i.imgur.com/hAp4rFM.png",
 	"http://i.imgur.com/tTKWnnJ.png",
 	"http://i.imgur.com/2eRZAhq.png",
