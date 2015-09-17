@@ -3,7 +3,6 @@ var geocoder = new google.maps.Geocoder();
 var Greetings = React.createClass({
 
   getInitialState: function() {
-    console.log("REACT: getInitialState");
     return {
       enable: false,
       btnclass: "btn btn-primary disabled",
@@ -19,7 +18,6 @@ var Greetings = React.createClass({
   },
 
   render: function() {
-    console.log("REACT: render");
     return (
       <div>
         <div id="container">
@@ -111,8 +109,6 @@ var Greetings = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log("REACT: componentDidMount");
-
     // Add GoogleMap
     const spinner = new Spinner({});
     const mapOptions = {
@@ -155,7 +151,6 @@ var Greetings = React.createClass({
       spinner.spin(document.getElementById('container'));
       map.setCenter({lat: l.lat, lng: l.lng});
       map.setZoom(l.zoom);
-      console.log("loc length: "+me.state.loc.length+" i = "+i);
     };
 
     // Define all listeners for modal:
@@ -172,7 +167,6 @@ var Greetings = React.createClass({
       $(React.findDOMNode(me.refs.myModal)).focus();
     });
     $(React.findDOMNode(me.refs.myModal)).on('hidden.bs.modal', function(){
-      console.log("REACT: questions answered = "+me.state.numQuestions);
       // When the modal is closed by clicking the grey overlay,
       // the field need to be focused when the modal is closed
       // completely, not at the time when closeModal is called.
@@ -202,7 +196,6 @@ var Greetings = React.createClass({
     });
 
     if (!docCookies.getItem('hasShownIntro')) {
-      //console.log("First time. Show intro.");
       introJs()
         .setOption('showProgress', true)
         .setOption('showBullets', false)
@@ -220,8 +213,6 @@ var Greetings = React.createClass({
           { element: '#score', intro: "Your wonderful score! ☺", position: 'left' }
         ] })
       .start();
-    } else {
-      //console.log("Have shown intro before!!");
     }
 
     // Load the map for the first question
@@ -229,12 +220,10 @@ var Greetings = React.createClass({
   },
 
   componentWillUnmount: function() {
-    console.log("REACT: componentWillUnmount");
     $(React.findDOMNode(this.refs.country)).autocomplete('destroy');
   },
 
   handleChange: function(event) {
-    //console.log("REACT: handleChange");
     this.state.userInput = event.target.value;
     if (event.target.value.length > 0) {
       this.setState({ enable: true, btnclass: "btn btn-primary"})
@@ -244,7 +233,6 @@ var Greetings = React.createClass({
   },
 
   handleClick: function(event) {
-    console.log("REACT: handleClick");
     var input = this.state.userInput.toUpperCase().trim();
     var latlng = this.state.latlng;
     var me = this;
@@ -254,9 +242,7 @@ var Greetings = React.createClass({
   		'language': "en"
   		},
       function(result, status) {
-
         if (status == google.maps.GeocoderStatus.OK) {
-            console.log("REACT: Geocoder Status OK");
           	var addr = result[0].address_components;
           	var longCountry = "";
             var random;
@@ -280,12 +266,10 @@ var Greetings = React.createClass({
                       answerMesg: "Sorry! This is in "+longCountry+". 💩",
                       memeImg: noMeme[random],
                       numQuestions: me.state.numQuestions+1 });
-
-                    console.log("REACT: Wrong answer. Got "+input+". Correct answer is "+longCountry);
                   }
           			}
           	}
-            console.log("REACT: show modal");
+
             $(React.findDOMNode(me.refs.myModal)).modal('show');
             me.setState({ userInput: ""});
 
@@ -317,7 +301,6 @@ var Greetings = React.createClass({
     }
   },
   closeResModal: function(event) {
-    console.log("REACT: closeResModal");
     $(React.findDOMNode(this.refs.finalResModal)).modal('hide');
     this.setState({ userInput: "", score: 0, loc: origloc.slice(), numQuestions: 0 });
   },
