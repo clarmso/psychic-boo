@@ -31,7 +31,7 @@ var Greetings = React.createClass({displayName: "Greetings",
                  placeholder: "Country Name", 
                  onChange: this.handleChange, 
                  onKeyUp: this.handleEnter, 
-                 value: this.state.userInput}), 
+                 value: this.state.userInput}), " ", 
                React.createElement("button", {
                  id: "enter", 
                  bsStyle: "danger", 
