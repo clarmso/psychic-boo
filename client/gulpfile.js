@@ -7,7 +7,6 @@ var react = require('gulp-react');
 gulp.task('less', function() {
     return gulp.src('./style.less')  // only compile the entry file
         .pipe(less())
-        //.pipe(csso())
         .pipe(gulp.dest('.'))
         .pipe(livereload());
 });
@@ -20,7 +19,7 @@ gulp.task('reload-html', function() {
 
 gulp.task('compile-jsx', function() {
     return gulp.src('./whereami.jsx')
-      .pipe(react())
+      .pipe(react({es6module:true}))
       .pipe(gulp.dest('.'))
       .pipe(livereload());
 })
