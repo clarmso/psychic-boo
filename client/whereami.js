@@ -1,10 +1,11 @@
+//var GoogleMap = require('google-map-react');
 var geocoder = new google.maps.Geocoder();
 
 var Greetings = React.createClass({displayName: "Greetings",
 
   getInitialState: function() {
     return {
-      enable: false,
+      btnenable: false,
       btnclass: "btn btn-primary disabled",
       userInput: "",
       score: 0,
@@ -21,7 +22,7 @@ var Greetings = React.createClass({displayName: "Greetings",
     return (
       React.createElement("div", null, 
         React.createElement("div", {id: "container"}, 
-           React.createElement("h1", null, "WHERE AM I?"), 
+           React.createElement("h1", {id: "header"}, "WHERE AM I?"), 
            React.createElement("div", {className: "row"}, 
              React.createElement("div", {className: "col-xs-8"}, 
                React.createElement("input", {
@@ -34,7 +35,7 @@ var Greetings = React.createClass({displayName: "Greetings",
                  id: "enter", 
                  bsStyle: "danger", 
                  className: this.state.btnclass, 
-                 disabled: !this.state.enable, 
+                 disabled: !this.state.btnenable, 
                  onClick: this.handleClick}, "Enter")
              ), 
              React.createElement("div", {className: "col-xs-4"}, 
@@ -206,7 +207,7 @@ var Greetings = React.createClass({displayName: "Greetings",
           docCookies.setItem('hasShownIntro', true);
         })
         .setOptions({ steps: [
-          { intro: "Welcome! Let me show you how to play this game." },
+          { element: '#header', intro: "Welcome! Let me show you how to play this game.", position: 'bottom-middle-aligned' },
           { element: '#map-canvas', intro: "Study at the map carefully.", position: 'bottom-middle-aligned' },
           { element: '#country', intro: "Type your answer here.", position: 'right' },
           { element: '#enter', intro: "Click 'Enter'", position: 'bottom-middle-aligned' },
@@ -226,9 +227,9 @@ var Greetings = React.createClass({displayName: "Greetings",
   handleChange: function(event) {
     this.state.userInput = event.target.value;
     if (event.target.value.length > 0) {
-      this.setState({ enable: true, btnclass: "btn btn-primary"})
+      this.setState({ btnenable: true, btnclass: "btn btn-primary"})
     } else {
-      this.setState({ enable: false, btnclass: "btn btn-primary disabled"});
+      this.setState({ btnenable: false, btnclass: "btn btn-primary disabled"});
     }
   },
 
