@@ -23,4 +23,4 @@ Don't worry if you still don't get it.  There's a quick walkthrough of the game 
 
 ## Acknowledgement
 * BrainStation
-* ![@stolksdorf](https://github.com/stolksdorf/)
+* [@stolksdorf](https://github.com/stolksdorf/)
