@@ -3,7 +3,7 @@
 This repository contains the project for BrainStation Waterloo's
 Intro to Web Development Course (Summer 2015).
 
-See the project in action: [http://psychic-boo.herokuapp.com/].
+See the project in action: http://psychic-boo.herokuapp.com/.
 
 ## How to play?
 ![Screenshhot](https://raw.githubusercontent.com/clarmso/psychic-boo/master/Mockups/Screen%20Shot%202015-11-11%20at%209.08.59%20PM.png)
@@ -23,4 +23,4 @@ Don't worry if you still don't get it.  There's a quick walkthrough of the game 
 
 ## Acknowledgement
 * BrainStation
-* @stolksdorf
+* ![@stolksdorf](https://github.com/stolksdorf/)
