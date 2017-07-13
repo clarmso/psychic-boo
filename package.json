@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "My Portfolio site",
   "main": "server.js",
+  "engines": {
+      "node": "6.11.1"
+  },
   "dependencies": {
     "express": "^4.13.1"
   },
